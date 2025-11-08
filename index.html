@@ -121,42 +121,12 @@
       background: var(--void);
       position: relative;
       overflow-x: hidden;
-      cursor: none;
     }
-    
-    /* Custom Cursor */
-    .cursor {
-      width: 8px;
-      height: 8px;
-      border: 1px solid var(--accent);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s, border-color 0.2s;
-      mix-blend-mode: difference;
+     
+    body.modal-open {
+      overflow: hidden;
     }
-    
-    .cursor-follower {
-      width: 32px;
-      height: 32px;
-      border: 1px solid rgba(255, 140, 0, 0.3);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s var(--ease-spirit), height 0.3s var(--ease-spirit);
-      mix-blend-mode: difference;
-    }
-    
-    .cursor.hover {
-      width: 40px;
-      height: 40px;
-      border-color: var(--phoenix-flame);
-    }
-    
+
     /* ═══════════════════════════════════════════════════════════
        INFINITE VOID BACKGROUND
        ═══════════════════════════════════════════════════════════ */
@@ -321,7 +291,12 @@
         grid-template-columns: 1fr;
         gap: 40px;
       }
-      
+      .asymmetric-grid > div:first-child {
+        order: 2; /* Move visual below text on mobile */
+      }
+       .asymmetric-grid > div:last-child {
+        order: 1;
+      }
       .container {
         padding: 0 24px;
       }
@@ -561,7 +536,44 @@
     /* ═══════════════════════════════════════════════════════════
        ABOUT SECTION — THE PHILOSOPHY
        ═══════════════════════════════════════════════════════════ */
-    
+    .about-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 250px;
+    }
+    .phoenix-flame-visual {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        animation: breath-flame 8s ease-in-out infinite;
+    }
+    .phoenix-flame-visual::before, .phoenix-flame-visual::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--accent);
+        border-radius: 45% 55% 50% 50% / 60% 60% 40% 40%;
+        opacity: 0.5;
+        mix-blend-mode: screen;
+        transform: rotate(45deg);
+        filter: blur(2px);
+    }
+    .phoenix-flame-visual::after {
+        transform: rotate(-35deg) scale(0.7);
+        border-color: var(--blue-spirit);
+        animation: breath-flame 8s ease-in-out infinite reverse;
+        opacity: 0.3;
+    }
+
+    @keyframes breath-flame {
+      0%, 100% { transform: scale(0.95) rotate(0deg); }
+      50% { transform: scale(1.05) rotate(10deg); }
+    }
+
+
     .about-text {
       font-size: 18px;
       line-height: 1.9;
@@ -674,7 +686,7 @@
     }
     
     /* ═══════════════════════════════════════════════════════════
-       PROJECTS SECTION — ABSTRACT CARDS
+       PROJECTS SECTION & MODAL
        ═══════════════════════════════════════════════════════════ */
     
     .projects-grid {
@@ -765,6 +777,69 @@
       color: var(--accent);
     }
     
+    .project-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2000;
+      background: rgba(17, 17, 17, 0.7);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--dur-breath) var(--ease-spirit), visibility 0s var(--dur-breath);
+    }
+
+    .project-modal.active {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity var(--dur-breath) var(--ease-spirit), visibility 0s;
+    }
+
+    .modal-content {
+      background: var(--void-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 40px;
+      max-width: 600px;
+      width: 90%;
+      transform: scale(0.95) translateY(20px);
+      transition: transform var(--dur-breath) var(--ease-spirit);
+      position: relative;
+    }
+    
+    .project-modal.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-content h3 {
+      font-size: 32px;
+      margin-bottom: 24px;
+    }
+    .modal-content p {
+      color: var(--ghost);
+      margin-bottom: 32px;
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: var(--ghost);
+      font-size: 28px;
+      cursor: pointer;
+      transition: color var(--dur-instant), transform var(--dur-instant);
+    }
+    .modal-close:hover {
+      color: var(--light);
+      transform: rotate(90deg);
+    }
+
     /* ═══════════════════════════════════════════════════════════
        CONTACT SECTION — CONSTELLATION OF LINKS
        ═══════════════════════════════════════════════════════════ */
@@ -775,6 +850,7 @@
       align-items: center;
       gap: 40px;
       text-align: center;
+      width: 100%;
     }
     
     .contact-icons {
@@ -782,8 +858,19 @@
       gap: 24px;
       flex-wrap: wrap;
       justify-content: center;
+      opacity: 0;
+      transform: translateY(20px);
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity var(--dur-breath), transform var(--dur-breath), max-height var(--dur-breath);
     }
     
+    .contact-constellation:hover .contact-icons {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 200px;
+    }
+
     .contact-icon {
       width: 56px;
       height: 56px;
@@ -839,7 +926,12 @@
       color: var(--phantom);
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      margin-bottom: 24px;
+      margin-top: 24px; /* Updated margin */
+      transition: opacity var(--dur-breath);
+    }
+
+    .contact-constellation:hover .contact-label {
+        opacity: 0;
     }
     
     /* ═══════════════════════════════════════════════════════════
@@ -879,86 +971,13 @@
       cursor: pointer;
       transition: all var(--dur-breath) var(--ease-phoenix);
       background: rgba(255, 255, 255, 0.02);
+      user-select: none; /* prevent text selection on click */
     }
     
     .phoenix-seal:hover {
       transform: rotate(180deg) scale(1.1);
       border-color: var(--accent);
       box-shadow: var(--shadow-glow);
-    }
-    
-    /* ═══════════════════════════════════════════════════════════
-       WHISPER MODAL — HIDDEN WISDOM
-       ═══════════════════════════════════════════════════════════ */
-    
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(12px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      opacity: 0;
-      transition: opacity var(--dur-breath);
-    }
-    
-    .modal-overlay.active {
-      display: flex;
-      opacity: 1;
-    }
-    
-    .modal {
-      background: var(--void-soft);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 48px;
-      max-width: 500px;
-      width: calc(100% - 48px);
-      position: relative;
-      transform: scale(0.9);
-      transition: transform var(--dur-breath) var(--ease-phoenix);
-    }
-    
-    .modal-overlay.active .modal {
-      transform: scale(1);
-    }
-    
-    .modal-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 32px;
-      height: 32px;
-      border: 1px solid var(--line);
-      border-radius: 50%;
-      background: transparent;
-      color: var(--ghost);
-      font-size: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all var(--dur-instant);
-    }
-    
-    .modal-close:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: rotate(90deg);
-    }
-    
-    .modal-quote {
-      font-size: 22px;
-      line-height: 1.6;
-      color: var(--light);
-      font-weight: 300;
-      font-style: italic;
-      text-align: center;
     }
     
     /* ═══════════════════════════════════════════════════════════
@@ -986,6 +1005,60 @@
     
     .secret-message.show {
       opacity: 1;
+    }
+    
+    /* Phoenix Egg */
+    .phoenix-egg {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 80px;
+      background: linear-gradient(135deg, #ff8c00 0%, #ff6b35 100%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      opacity: 0;
+      transform: scale(0) rotate(0deg);
+      transition: all var(--dur-rebirth) var(--ease-phoenix);
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(255, 140, 0, 0.3);
+      animation: egg-wobble 3s ease-in-out infinite;
+    }
+    
+    .phoenix-egg.hatching {
+      opacity: 1;
+      transform: scale(1) rotate(5deg);
+    }
+    
+    .phoenix-egg::before {
+      content: '🔥';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      opacity: 0;
+      transition: opacity var(--dur-breath);
+    }
+    
+    .phoenix-egg:hover::before {
+      opacity: 1;
+    }
+    
+    @keyframes egg-wobble {
+      0%, 100% { transform: scale(0) rotate(0deg); }
+      25% { transform: scale(0) rotate(-5deg); }
+      75% { transform: scale(0) rotate(5deg); }
+    }
+    
+    @keyframes egg-wobble-active {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1) rotate(-5deg); }
+      75% { transform: scale(1) rotate(5deg); }
+    }
+    
+    .phoenix-egg.hatching {
+      animation: egg-wobble-active 3s ease-in-out infinite;
     }
     
     /* Invoker Mode Indicator */
@@ -1040,21 +1113,13 @@
        ═══════════════════════════════════════════════════════════ */
     
     @media (max-width: 768px) {
-      body {
-        cursor: auto;
-      }
-      
-      .cursor,
-      .cursor-follower {
-        display: none;
-      }
-      
       .abstract-shape {
         display: none;
       }
       
       section {
         min-height: auto;
+        padding: calc(var(--space-void) / 1.5) 0;
       }
       
       .contact-icons {
@@ -1069,10 +1134,6 @@
   </style>
 </head>
 <body>
-  <!-- Custom Cursor -->
-  <div class="cursor"></div>
-  <div class="cursor-follower"></div>
-  
   <!-- Void Background Layers -->
   <div class="void-layer void-gradient"></div>
   <canvas class="void-layer particle-canvas"></canvas>
@@ -1083,19 +1144,20 @@
   <nav class="nav">
     <a href="#" class="nav-brand">A.M.</a>
     <ul class="nav-links">
-      <li><a href="#about">Essence</a></li>
-      <li><a href="#skills">Mastery</a></li>
-      <li><a href="#projects">Creations</a></li>
-      <li><a href="#contact">Connect</a></li>
+      <li><a href="#about" class="nav-link">Essence</a></li>
+      <li><a href="#skills" class="nav-link">Mastery</a></li>
+      <li><a href="#projects" class="nav-link">Creations</a></li>
+      <li><a href="#contact" class="nav-link">Connect</a></li>
     </ul>
   </nav>
   
   <!-- Progress Navigation -->
   <div class="progress-nav">
-    <div class="progress-dot" data-section="about"></div>
-    <div class="progress-dot" data-section="skills"></div>
-    <div class="progress-dot" data-section="projects"></div>
-    <div class="progress-dot" data-section="contact"></div>
+    <a href="#home" class="progress-dot" data-section="home" aria-label="Go to home"></a>
+    <a href="#about" class="progress-dot" data-section="about" aria-label="Go to about"></a>
+    <a href="#skills" class="progress-dot" data-section="skills" aria-label="Go to skills"></a>
+    <a href="#projects" class="progress-dot" data-section="projects" aria-label="Go to projects"></a>
+    <a href="#contact" class="progress-dot" data-section="contact" aria-label="Go to contact"></a>
   </div>
   
   <!-- Main Content -->
@@ -1105,7 +1167,7 @@
       <div class="container">
         <div class="hero-content">
           <h1 data-text="AVINAB MAHARJAN">AVINAB MAHARJAN</h1>
-          <p class="subtitle">Learner</p>
+          <p class="subtitle">Technologist & Learner</p>
           <p class="hero-mantra">"From ashes, we rise."</p>
         </div>
       </div>
@@ -1120,17 +1182,18 @@
     <section id="about" class="reveal">
       <div class="container">
         <div class="asymmetric-grid">
+           <div class="about-visual">
+               <div class="phoenix-flame-visual"></div>
+           </div>
           <div>
             <h2>Essence</h2>
-          </div>
-          <div>
             <p class="about-text">
-              I love exploring how things work :)
+              I'm drawn to technology because it helps people think and create better. I enjoy quiet work, honest ideas, and progress that takes time. I build things to learn, and I learn to build better things.
             </p>
             <ul class="principles">
-              <li></li>
-              <li></li>
-              <li></li>
+              <li>Clarity over complexity</li>
+              <li>Depth over speed</li>
+              <li>Small steps, every day</li>
             </ul>
           </div>
         </div>
@@ -1140,51 +1203,58 @@
     <!-- Skills Section -->
     <section id="skills" class="reveal">
       <div class="container">
-        <h2 style="text-align: center;">Mastery</h2>
+        <h2 style="text-align: center; display: block;">Mastery</h2>
         <div class="skills-constellation">
-          <div class="skill-orb"></div>
+          <div class="skill-orb">Networking</div>
           <div class="skill-orb">Cybersecurity</div>
-          <div class="skill-orb"></div>
-          <div class="skill-orb">y</div>
-          <div class="skill-orb"></div>
+          <div class="skill-orb">Web Design</div>
+          <div class="skill-orb">Business Strategy</div>
+          <div class="skill-orb">Communication</div>
         </div>
       </div>
     </section>
     
     <!-- Projects Section -->
     <section id="projects" class="reveal">
-      <div class="container">
-        <h2>Creations</h2>
-        <div class="projects-grid">
-          <article class="project-card">
-            <div class="project-header">
-              <h3>Network Lab Companion</h3>
-              <span class="project-tag">coming soon</span>
+        <div class="container">
+            <h2>Creations</h2>
+            <div class="projects-grid">
+                <article class="project-card" 
+                    data-title="Astra Planner"
+                    data-tag="Productivity App"
+                    data-description="A minimalist, focus-driven web application for planning and tracking personal projects. It utilizes local storage to ensure privacy and provides a clean, distraction-free interface to help users align their daily tasks with their long-term goals. Built with modern JavaScript and a lightweight CSS framework.">
+                    <div class="project-header">
+                        <h3>Astra Planner</h3>
+                        <span class="project-tag">Productivity App</span>
+                    </div>
+                    <p>A web application designed for clarity and focus in personal project management.</p>
+                </article>
+                
+                <article class="project-card" 
+                    data-title="VoidSec"
+                    data-tag="Security Tool"
+                    data-description="A command-line interface (CLI) tool that provides a security baseline checklist for small development teams. It automates checks for common vulnerabilities and misconfigurations in web applications, offering actionable advice to establish strong foundational security from the start. Written in Python.">
+                    <div class="project-header">
+                        <h3>VoidSec</h3>
+                        <span class="project-tag">Security Tool</span>
+                    </div>
+                    <p>A CLI tool providing a simple security baseline for small development teams.</p>
+                </article>
+                
+                <article class="project-card"
+                    data-title="Echo Chamber"
+                    data-tag="Data Visualization"
+                    data-description="An interactive data visualization project exploring the spread of information on social media. Using D3.js, it creates a dynamic network graph that shows how ideas propagate, mutate, and are amplified within closed communities. The project aims to make abstract data tangible and thought-provoking.">
+                    <div class="project-header">
+                        <h3>Echo Chamber</h3>
+                        <span class="project-tag">Data Visualization</span>
+                    </div>
+                    <p>An interactive visualization of information flow through digital networks.</p>
+                </article>
             </div>
-            <p>A lightweight toolkit for practicing routing, subnetting, and simple topologies with clear visuals.</p>
-            <a href="#" class="project-link">Enter →</a>
-          </article>
-          
-          <article class="project-card">
-            <div class="project-header">
-              <h3>Quiet Notes</h3>
-              <span class="project-tag">coming soon</span>
-            </div>
-            <p>A minimal web notebook.</p>
-            <a href="#" class="project-link">Enter →</a>
-          </article>
-          
-          <article class="project-card">
-            <div class="project-header">
-              <h3>Safe Start</h3>
-              <span class="project-tag">coming soon</span>
-            </div>
-            <p>A simple checklist-driven security baseline for small teams.</p>
-            <a href="#" class="project-link">Enter →</a>
-          </article>
         </div>
-      </div>
     </section>
+
     
     <!-- Contact Section -->
     <section id="contact" class="reveal">
@@ -1231,14 +1301,25 @@
   <footer>
     <div class="footer-content">
       <p>© 2025 Avinab Maharjan</p>
-      <button class="phoenix-seal" aria-label="Reveal wisdom">🔥</button>
+      <button class="phoenix-seal" aria-label="Reveal wisdom" title="Reveal a whisper of wisdom">🔥</button>
     </div>
   </footer>
-  
 
+  <!-- Project Modal -->
+  <div class="project-modal" id="project-modal" aria-hidden="true" role="dialog">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal">&times;</button>
+      <h3 id="modal-title"></h3>
+      <p id="modal-description"></p>
+      <a href="#" id="modal-link" class="project-link" target="_blank" rel="noopener">View Project →</a>
+    </div>
+  </div>
   
   <!-- Secret Message -->
   <div class="secret-message" id="secret-msg"></div>
+  
+  <!-- Phoenix Egg (appears on November 7th) -->
+  <div class="phoenix-egg" id="phoenix-egg"></div>
   
   <!-- Invoker Orbs -->
   <div class="invoker-orbs">
@@ -1261,7 +1342,8 @@
       phoenixMode: false,
       invokerMode: false,
       clickCount: 0,
-      clickTimer: null
+      clickTimer: null,
+      whisperIndex: 0
     };
     
     const WHISPERS = [
@@ -1276,40 +1358,9 @@
       'From ashes, we rise.',
       'The void is not empty—it is infinite.'
     ];
-    
-    // ═══════════════════════════════════════════════════════════
-    // CUSTOM CURSOR
-    // ═══════════════════════════════════════════════════════════
-    
-    const cursor = document.querySelector('.cursor');
-    const cursorFollower = document.querySelector('.cursor-follower');
-    let mouseX = 0, mouseY = 0;
-    let followerX = 0, followerY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top = mouseY + 'px';
-    });
-    
-    function animateFollower() {
-      const dx = mouseX - followerX;
-      const dy = mouseY - followerY;
-      
-      followerX += dx * 0.1;
-      followerY += dy * 0.1;
-      
-      cursorFollower.style.left = followerX + 'px';
-      cursorFollower.style.top = followerY + 'px';
-      
-      requestAnimationFrame(animateFollower);
-    }
-    
-    animateFollower();
-    
 
-    
+    let animationFrameId; // To control animation loops
+
     // ═══════════════════════════════════════════════════════════
     // PARTICLE SYSTEM — VOID DUST
     // ═══════════════════════════════════════════════════════════
@@ -1319,15 +1370,15 @@
       
       const canvas = document.querySelector('.particle-canvas');
       const ctx = canvas.getContext('2d');
-      
+      STATE.particles = [];
+
       function resize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
       }
       resize();
-      window.addEventListener('resize', resize);
+      window.addEventListener('resize', resize, { passive: true });
       
-      // Create particles
       for (let i = 0; i < 60; i++) {
         STATE.particles.push({
           x: Math.random() * canvas.width,
@@ -1357,7 +1408,7 @@
           ctx.fill();
         });
         
-        requestAnimationFrame(animate);
+        animationFrameId = requestAnimationFrame(animate);
       }
       
       animate();
@@ -1378,7 +1429,7 @@
         canvas.height = window.innerHeight;
       }
       resize();
-      window.addEventListener('resize', resize);
+      window.addEventListener('resize', resize, { passive: true });
       
       document.addEventListener('mousemove', (e) => {
         STATE.trails.push({
@@ -1393,7 +1444,7 @@
         if (STATE.trails.length > 60) {
           STATE.trails.shift();
         }
-      });
+      }, { passive: true });
       
       function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1417,103 +1468,107 @@
           return true;
         });
         
-        requestAnimationFrame(animate);
+        animationFrameId = requestAnimationFrame(animate);
       }
       
       animate();
     }
     
     // ═══════════════════════════════════════════════════════════
-    // SCROLL NAVIGATION
+    // SCROLL & NAVIGATION
     // ═══════════════════════════════════════════════════════════
     
-    function handleScroll() {
+    function handleScrollNav() {
       const currentScroll = window.pageYOffset;
       const nav = document.querySelector('.nav');
       
-      if (Math.abs(currentScroll - STATE.lastScroll) < 10) return;
-      
+      // Hide/show nav
+      if (Math.abs(currentScroll - STATE.lastScroll) < 10 && currentScroll > 0) return;
       if (currentScroll > STATE.lastScroll && currentScroll > 100) {
         nav.classList.add('hidden');
       } else {
         nav.classList.remove('hidden');
       }
-      
       STATE.lastScroll = currentScroll;
     }
     
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(handleScroll, 10);
-    });
+    window.addEventListener('scroll', handleScrollNav, { passive: true });
     
     // ═══════════════════════════════════════════════════════════
     // INTERSECTION OBSERVERS
     // ═══════════════════════════════════════════════════════════
     
     function initObservers() {
-      // Reveal animations
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
           }
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.15 });
       
-      document.querySelectorAll('.reveal').forEach(el => {
-        revealObserver.observe(el);
-      });
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
       
-      // Active section tracking
       const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const id = entry.target.id;
-            
-            // Update nav links
-            document.querySelectorAll('.nav-links a').forEach(link => {
-              link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-            });
-            
-            // Update progress dots
-            document.querySelectorAll('.progress-dot').forEach(dot => {
-              dot.classList.toggle('active', dot.dataset.section === id);
+            document.querySelectorAll('.nav-links a, .progress-dot').forEach(link => {
+                const linkId = (link.getAttribute('href') || `#${link.dataset.section}`).substring(1);
+                link.classList.toggle('active', linkId === id);
             });
           }
         });
-      }, { threshold: 0.5 });
+      }, { rootMargin: '-50% 0px -50% 0px' });
       
-      document.querySelectorAll('section[id]').forEach(section => {
-        sectionObserver.observe(section);
-      });
+      document.querySelectorAll('section[id]').forEach(section => sectionObserver.observe(section));
     }
-    
-    // ═══════════════════════════════════════════════════════════
-    // SMOOTH SCROLL
-    // ═══════════════════════════════════════════════════════════
-    
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href === '#') return;
-        
-        e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) {
-          target.scrollIntoView({ 
-            behavior: STATE.reducedMotion ? 'auto' : 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
-    
 
-    
     // ═══════════════════════════════════════════════════════════
-    // EASTER EGGS — PHOENIX MODE
+    // PROJECT MODAL
+    // ═══════════════════════════════════════════════════════════
+    function initProjectModal() {
+        const modal = document.getElementById('project-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-description');
+        const modalLink = document.getElementById('modal-link');
+        const cards = document.querySelectorAll('.project-card');
+        const closeBtn = document.querySelector('.modal-close');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                modalTitle.textContent = card.dataset.title;
+                modalDesc.textContent = card.dataset.description;
+                // You can add a real link in a data-attribute like data-link="#"
+                // modalLink.href = card.dataset.link || '#';
+                
+                document.body.classList.add('modal-open');
+                modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+            });
+        });
+
+        function closeModal() {
+            document.body.classList.remove('modal-open');
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // EASTER EGGS
     // ═══════════════════════════════════════════════════════════
     
     function showSecret(message, duration = 3000) {
@@ -1521,81 +1576,76 @@
       secretMsg.textContent = message;
       secretMsg.classList.add('show');
       
-      setTimeout(() => {
-        secretMsg.classList.remove('show');
-      }, duration);
+      setTimeout(() => { secretMsg.classList.remove('show'); }, duration);
     }
     
     function activatePhoenixMode() {
       if (STATE.phoenixMode) return;
-      
       STATE.phoenixMode = true;
       document.body.classList.add('phoenix-mode');
-      
       showSecret('🔥 Phoenix Mode Activated — Rise from the ashes', 4000);
       
-      // Add phoenix glow to cursor
       const phoenixGlow = document.querySelector('.phoenix-glow');
       document.addEventListener('mousemove', (e) => {
-        phoenixGlow.style.left = (e.clientX - 300) + 'px';
-        phoenixGlow.style.top = (e.clientY - 300) + 'px';
+        phoenixGlow.style.transform = `translate(${e.clientX - 300}px, ${e.clientY - 300}px)`;
       });
     }
     
     function activateInvokerMode() {
       if (STATE.invokerMode) return;
-      
       STATE.invokerMode = true;
       document.querySelector('.invoker-orbs').classList.add('active');
-      
       showSecret('⚡ Invoker Mode — Quas Wex Exort', 4000);
     }
     
-    // Secret code listener
+    function checkPhoenixDay() {
+      const today = new Date();
+      if (today.getMonth() === 10 && today.getDate() === 7) { // November 7th
+        const egg = document.getElementById('phoenix-egg');
+        setTimeout(() => {
+          egg.classList.add('hatching');
+          showSecret('🥚 A Phoenix egg has appeared!', 5000);
+        }, 2000);
+        
+        egg.addEventListener('click', () => {
+          egg.style.transform = 'scale(1.5) rotate(720deg)';
+          egg.style.opacity = '0';
+          showSecret('🔥🦅 The Phoenix has risen!', 6000);
+          activatePhoenixMode();
+          setTimeout(() => { egg.style.display = 'none'; }, 1000);
+        }, { once: true });
+      }
+    }
+    
     document.addEventListener('keypress', (e) => {
       STATE.secretCode += e.key.toLowerCase();
-      
       if (STATE.secretCode.includes('phoenix')) {
         activatePhoenixMode();
         STATE.secretCode = '';
       }
-      
       if (STATE.secretCode.includes('invoker')) {
         activateInvokerMode();
         STATE.secretCode = '';
       }
-      
-      // Clear old codes
       if (STATE.secretCode.length > 20) {
         STATE.secretCode = STATE.secretCode.slice(-10);
       }
     });
     
-    // Triple click easter egg
     document.addEventListener('click', () => {
       STATE.clickCount++;
-      
       clearTimeout(STATE.clickTimer);
-      STATE.clickTimer = setTimeout(() => {
-        STATE.clickCount = 0;
-      }, 800);
+      STATE.clickTimer = setTimeout(() => { STATE.clickCount = 0; }, 600);
       
       if (STATE.clickCount === 3) {
-        showSecret('💫 "The void is not empty—it is infinite." — A.M.', 5000);
+        showSecret('The void whispers back...', 5000);
         STATE.clickCount = 0;
       }
     });
-    
-    // ═══════════════════════════════════════════════════════════
-    // PHOENIX GLOW FOLLOW
-    // ═══════════════════════════════════════════════════════════
-    
-    const phoenixGlow = document.querySelector('.phoenix-glow');
-    document.addEventListener('mousemove', (e) => {
-      if (STATE.phoenixMode) {
-        phoenixGlow.style.left = (e.clientX - 300) + 'px';
-        phoenixGlow.style.top = (e.clientY - 300) + 'px';
-      }
+
+    document.querySelector('.phoenix-seal').addEventListener('click', () => {
+        showSecret(WHISPERS[STATE.whisperIndex]);
+        STATE.whisperIndex = (STATE.whisperIndex + 1) % WHISPERS.length;
     });
     
     // ═══════════════════════════════════════════════════════════
@@ -1609,28 +1659,25 @@
       }
       
       initObservers();
+      initProjectModal();
+      checkPhoenixDay();
     }
-    
+
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
       init();
     }
     
-    // ═══════════════════════════════════════════════════════════
-    // PERFORMANCE — PAUSE ON HIDDEN
-    // ═══════════════════════════════════════════════════════════
-    
+    // Performance: Pause animations when tab is not visible
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        // Pause animations
-      } else {
-        // Resume animations
-        if (!STATE.reducedMotion) {
-          initParticles();
-          initTrail();
+        if (document.hidden) {
+            cancelAnimationFrame(animationFrameId);
+        } else if (!STATE.reducedMotion) {
+            // Re-init to handle resize if occurred while hidden
+            initParticles(); 
+            initTrail();
         }
-      }
     });
   </script>
 </body>
