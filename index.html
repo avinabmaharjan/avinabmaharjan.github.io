@@ -1230,18 +1230,12 @@
   <!-- Footer -->
   <footer>
     <div class="footer-content">
-      <p>© 2025 Avinab Maharjan — Designed and built with patience.</p>
+      <p>© 2025 Avinab Maharjan</p>
       <button class="phoenix-seal" aria-label="Reveal wisdom">🔥</button>
     </div>
   </footer>
   
-  <!-- Whisper Modal -->
-  <div class="modal-overlay" id="whisper-modal">
-    <div class="modal">
-      <button class="modal-close">×</button>
-      <p class="modal-quote"></p>
-    </div>
-  </div>
+
   
   <!-- Secret Message -->
   <div class="secret-message" id="secret-msg"></div>
@@ -1314,12 +1308,7 @@
     
     animateFollower();
     
-    // Cursor hover effects
-    const hoverElements = document.querySelectorAll('a, button, .project-card, .skill-orb');
-    hoverElements.forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
+
     
     // ═══════════════════════════════════════════════════════════
     // PARTICLE SYSTEM — VOID DUST
@@ -1521,38 +1510,7 @@
       });
     });
     
-    // ═══════════════════════════════════════════════════════════
-    // WHISPER MODAL
-    // ═══════════════════════════════════════════════════════════
-    
-    const modal = document.getElementById('whisper-modal');
-    const modalQuote = document.querySelector('.modal-quote');
-    const phoenixSeal = document.querySelector('.phoenix-seal');
-    const modalClose = document.querySelector('.modal-close');
-    
-    function openWhisper() {
-      const quote = WHISPERS[Math.floor(Math.random() * WHISPERS.length)];
-      modalQuote.textContent = quote;
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    
-    function closeWhisper() {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    
-    phoenixSeal.addEventListener('click', openWhisper);
-    modalClose.addEventListener('click', closeWhisper);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeWhisper();
-    });
-    
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        closeWhisper();
-      }
-    });
+
     
     // ═══════════════════════════════════════════════════════════
     // EASTER EGGS — PHOENIX MODE
