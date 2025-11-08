@@ -1,0 +1,304 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Avinab Maharjan — Portfolio</title>
+  <meta name="description" content="Portfolio of Avinab Maharjan — Technologist & Learner. A calm, minimalist one-page site with projects, skills, and contact." />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- Fonts (no frameworks) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #565a5f;
+      --line: #ebedf0;
+      --maxw: 860px;
+      --radius: 10px;
+      --focus: #0a0a0a;
+    }
+
+    /* Base */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      line-height: 1.65;
+      letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img { max-width: 100%; height: auto; }
+
+    /* Layout */
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+    section { padding: 72px 0; border-top: 1px solid var(--line); }
+    section:first-of-type { border-top: 0; }
+
+    /* Header / Hero */
+    header {
+      padding: 96px 0 52px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-family: "Poppins", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      text-align: center;
+      font-size: clamp(32px, 6vw, 56px);
+    }
+    .subtitle {
+      margin: 0 auto;
+      text-align: center;
+      color: var(--muted);
+      font-size: clamp(16px, 2.5vw, 18px);
+    }
+
+    /* Minimal nav */
+    nav {
+      margin-top: 32px;
+    }
+    .nav-list {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .nav-list a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding: 2px 0;
+    }
+    .nav-list a:hover { border-bottom-color: #d8dadd; }
+    .nav-list a:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* Section headings */
+    h2 {
+      margin: 0 0 18px;
+      font-family: "Poppins", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      font-size: clamp(22px, 3vw, 28px);
+    }
+    .section-intro {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* About */
+    .about p {
+      margin: 0;
+      max-width: 62ch;
+    }
+
+    /* Skills */
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .skill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: #fff;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .project {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      background: #fff;
+    }
+    .project h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .project p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .btn {
+      display: inline-block;
+      background: #fff;
+      color: var(--text);
+      border: 1px solid #dddfe3;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .btn:hover { background: #f7f8f9; border-color: #cfd3d8; }
+    .btn:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Contact */
+    .contact a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid #d8dadd;
+    }
+    .contact a:hover { border-bottom-color: #bfc3c8; }
+    .contact a:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 36px 0 48px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    /* Accessibility + Motion */
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .skip-link:focus {
+      position: static;
+      width: auto;
+      height: auto;
+      padding: 8px 12px;
+      background: #f2f3f5;
+      border-radius: 6px;
+      display: inline-block;
+      margin: 8px;
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    /* Subtle helpers */
+    .spacer-s { height: 8px; }
+    .spacer-m { height: 14px; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header>
+    <div class="wrap">
+      <h1>Avinab Maharjan</h1>
+      <p class="subtitle">Technologist & Learner</p>
+      <nav aria-label="Primary">
+        <ul class="nav-list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="about" class="about">
+      <div class="wrap">
+        <h2>About</h2>
+        <p>
+          I’m passionate about learning technology, understanding people, and building meaningful things. I value calm focus, clear thinking, and the kind of creativity that shows up every day. With patience and persistence, I enjoy turning ideas into practical, human-centered work.
+        </p>
+      </div>
+    </section>
+
+    <section id="skills" class="skills">
+      <div class="wrap">
+        <h2>Skills</h2>
+        <ul class="skills-list" aria-label="Skill set">
+          <li class="skill">Networking</li>
+          <li class="skill">Cybersecurity</li>
+          <li class="skill">Web Design</li>
+          <li class="skill">Business Strategy</li>
+          <li class="skill">Communication</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="wrap">
+        <h2>Projects</h2>
+        <div class="projects-grid" role="list">
+          <article class="project" role="listitem">
+            <h3>Project One</h3>
+            <p>A concise description of a meaningful project. Clear goals, thoughtful execution, and measurable outcomes.</p>
+            <a class="btn" href="#" aria-label="View Project One">View Project</a>
+          </article>
+
+          <article class="project" role="listitem">
+            <h3>Project Two</h3>
+            <p>Exploring technology with a practical approach—built to learn, validate ideas, and create real value.</p>
+            <a class="btn" href="#" aria-label="View Project Two">View Project</a>
+          </article>
+
+          <article class="project" role="listitem">
+            <h3>Project Three</h3>
+            <p>A small, focused build that balances simplicity and utility. Designed to be reliable and easy to use.</p>
+            <a class="btn" href="#" aria-label="View Project Three">View Project</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <h2>Contact</h2>
+        <p class="section-intro">Let’s connect.</p>
+        <p>
+          <a href="mailto:avinabmaharjan@protonmail.com">avinabmaharjan@protonmail.com</a><span class="spacer-s"></span><br />
+          <a rel="noopener" href="https://github.com/avinabmaharjan">github.com/avinabmaharjan</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">© 2025 Avinab Maharjan. All rights reserved.</div>
+  </footer>
+</body>
+</html>
+```
