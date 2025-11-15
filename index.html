@@ -1,324 +1,677 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Avinab Maharjan – Portfolio</title>
-  <meta name="description" content="The personal portfolio of Avinab Maharjan – learner, builder, and phoenix in progress." />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <style>
-    html {
-      scroll-behavior: smooth;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avinab Maharjan - Phoenix Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  /* Reset & basics */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  html { scroll-behavior: smooth; }
+  
+  body { 
+    font-family: 'Roboto', sans-serif; 
+    background-color: #0d0d0d; 
+    color: #f5f5f5; 
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  
+  a { text-decoration: none; color: inherit; }
+  
+  /* Container */
+  .container { 
+    width: 90%; 
+    max-width: 1200px; 
+    margin: auto; 
+    padding: 2rem 1rem; 
+  }
+  /* Header */
+  header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 0;
+    background-color: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+  
+  header.scrolled {
+    padding: 1rem 0;
+    box-shadow: 0 4px 20px rgba(255, 69, 0, 0.1);
+  }
+  
+  header h1 { 
+    font-family: 'Playfair Display', serif; 
+    font-size: 2.5rem; 
+    color: #ff4500;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  header h1:hover {
+    transform: scale(1.05);
+  }
+  
+  nav { 
+    display: flex; 
+    gap: 2rem;
+  }
+  
+  nav a { 
+    font-weight: 500; 
+    transition: all 0.3s;
+    position: relative;
+    padding: 0.5rem 0;
+  }
+  
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #ff4500;
+    transition: width 0.3s ease;
+  }
+  
+  nav a:hover::after {
+    width: 100%;
+  }
+  
+  nav a:hover { color: #ff4500; }
+  /* Mobile Menu Toggle */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+  }
+  
+  .menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: #ff4500;
+    transition: all 0.3s ease;
+    border-radius: 3px;
+  }
+  
+  .menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+  
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+  /* Hero */
+  .hero { 
+    text-align: center; 
+    margin: 6rem 0;
+    padding: 2rem 0;
+    animation: fadeInUp 1s ease-out;
+  }
+  
+  .hero h2 { 
+    font-size: 2.2rem; 
+    color: #ff6347; 
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+  
+  .hero p { 
+    font-size: 1.1rem; 
+    line-height: 1.8; 
+    max-width: 700px; 
+    margin: 1rem auto;
+    color: #ccc;
+  }
+  
+  .hero .tagline {
+    font-style: italic;
+    color: #ff6347;
+    margin-top: 2rem;
+    font-size: 1.15rem;
+    font-weight: 300;
+  }
+  /* Section Titles */
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #ff6347;
+    margin-bottom: 3rem;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #ff4500;
+  }
+  /* Skills Section */
+  #skills {
+    margin: 6rem 0;
+  }
+  
+  .skills-intro {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    color: #aaa;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  
+  .skills-constellation { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  
+  .skill-orb {
+    background: radial-gradient(circle, #ff4500 0%, #1a1a1a 70%);
+    padding: 1.2rem 2.5rem;
+    border-radius: 50px;
+    box-shadow: 0 0 25px rgba(255, 69, 0, 0.4);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .skill-orb::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .skill-orb:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .skill-orb:hover { 
+    transform: scale(1.15) translateY(-5px); 
+    box-shadow: 0 5px 35px rgba(255, 69, 0, 0.6);
+  }
+  /* Projects */
+  #projects {
+    margin: 6rem 0;
+  }
+  
+  .projects { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 2.5rem; 
+    margin-top: 3rem;
+  }
+  
+  .project-card {
+    background: #1a1a1a;
+    border-left: 5px solid #ff4500;
+    padding: 2rem;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 69, 0, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .project-card:hover::before {
+    left: 100%;
+  }
+  
+  .project-card:hover { 
+    transform: translateY(-10px); 
+    box-shadow: 0 15px 40px rgba(255, 69, 0, 0.3);
+    border-left-width: 8px;
+  }
+  
+  .project-card h3 { 
+    color: #ff6347; 
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .project-card p { 
+    line-height: 1.7; 
+    font-size: 0.95rem; 
+    color: #ccc;
+    margin-bottom: 0.8rem;
+  }
+  /* Contact Section */
+  #contact {
+    margin: 6rem 0;
+  }
+  
+  .contact-intro {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    color: #aaa;
+    line-height: 1.8;
+  }
+  
+  .contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .contact-card {
+    background: #1a1a1a;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+  
+  .contact-card:hover {
+    border-color: #ff4500;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 69, 0, 0.2);
+  }
+  
+  .contact-card h3 {
+    color: #ff6347;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+  
+  .contact-card a {
+    color: #ccc;
+    transition: color 0.3s ease;
+    word-break: break-word;
+  }
+  
+  .contact-card a:hover {
+    color: #ff4500;
+  }
+  
+  .contact-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #ff4500;
+  }
+  /* Footer */
+  footer { 
+    text-align: center; 
+    padding: 3rem 0; 
+    border-top: 1px solid #333; 
+    font-size: 0.9rem; 
+    color: #777;
+    margin-top: 4rem;
+  }
+  
+  .footer-quote {
+    font-style: italic;
+    color: #ff6347;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
     }
-  </style>
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes floatOrb {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .skill-orb { 
+    animation: floatOrb 4s ease-in-out infinite; 
+  }
+  
+  .skill-orb:nth-child(2) { animation-delay: 0.5s; }
+  .skill-orb:nth-child(3) { animation-delay: 1s; }
+  .skill-orb:nth-child(4) { animation-delay: 1.5s; }
+  .skill-orb:nth-child(5) { animation-delay: 2s; }
+  /* Scroll to top button */
+  .scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #ff4500;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
+  }
+  
+  .scroll-top:hover {
+    background: #ff6347;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(255, 69, 0, 0.6);
+  }
+  
+  .scroll-top.visible {
+    display: flex;
+  }
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    header h1 { font-size: 2rem; }
+    
+    .menu-toggle {
+      display: flex;
+    }
+    
+    nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(13, 13, 13, 0.98);
+      flex-direction: column;
+      padding: 2rem;
+      gap: 1.5rem;
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    nav.active {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    nav a {
+      text-align: center;
+      padding: 1rem;
+      border-bottom: 1px solid #333;
+    }
+    
+    .hero { margin: 3rem 0; }
+    .hero h2 { font-size: 1.7rem; }
+    .hero p { font-size: 1rem; }
+    
+    .section-title { font-size: 1.6rem; }
+    
+    .projects { 
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .skill-orb {
+      padding: 1rem 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .contact-methods {
+      grid-template-columns: 1fr;
+    }
+    
+    .scroll-top {
+      bottom: 20px;
+      right: 20px;
+      width: 45px;
+      height: 45px;
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container { width: 95%; }
+    header h1 { font-size: 1.7rem; }
+    .hero h2 { font-size: 1.4rem; }
+    .section-title { font-size: 1.4rem; }
+  }
+  /* Loading Animation */
+  .fade-in {
+    animation: fadeInUp 0.8s ease-out;
+  }
+</style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans">
-  <header class="sticky top-0 z-40 backdrop-blur bg-slate-950/70 border-b border-slate-800">
-    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#hero" class="text-sm font-semibold tracking-wide text-slate-100">Avinab Maharjan</a>
-      <nav class="hidden sm:flex gap-6 text-sm text-slate-300">
-        <a href="#about" class="hover:text-emerald-300 transition">About</a>
-        <a href="#skills" class="hover:text-emerald-300 transition">Skills</a>
-        <a href="#projects" class="hover:text-emerald-300 transition">Projects</a>
-        <a href="#contact" class="hover:text-emerald-300 transition">Contact</a>
-      </nav>
+<body>
+<div class="container">
+  <!-- Header -->
+  <header id="header">
+    <h1 onclick="scrollToTop()">Phoenix</h1>
+    <div class="menu-toggle" id="menuToggle">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
+    <nav id="nav">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Connect</a>
+    </nav>
   </header>
-
   <!-- Hero Section -->
-  <section id="hero" class="min-h-[80vh] flex items-center">
-    <div class="max-w-5xl mx-auto px-4 py-16 grid gap-10 md:grid-cols-[3fr,2fr] items-center">
-      <div>
-        <p class="text-xs uppercase tracking-[0.25em] text-emerald-300 mb-4">Portfolio · Built from ashes, not perfection</p>
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-semibold text-slate-50 mb-4 leading-tight">
-          Hi, I’m <span class="text-emerald-300">Avinab Maharjan</span>.
-        </h1>
-        <p class="text-lg sm:text-xl text-slate-200 mb-4">
-          Learner · Builder · Phoenix in progress.
-        </p>
-        <p class="text-sm sm:text-base text-slate-300 max-w-xl mb-8">
-          I didn’t arrive here with a perfect plan. I’ve gone missing on myself, failed quietly, restarted loudly, and sat in the dark wondering if I’d ever feel "caught up." This site is proof that even from the void, you can still choose to build.
-        </p>
-        <p class="text-sm sm:text-base font-medium text-emerald-300 mb-10">
-          I rise from what I’ve burned, carrying the embers forward instead of the shame.
-        </p>
-        <div class="flex flex-wrap gap-4 items-center">
-          <a href="#projects" class="px-5 py-2.5 rounded-full bg-emerald-400 text-slate-950 text-sm font-semibold shadow shadow-emerald-500/30 hover:bg-emerald-300 transition">
-            Walk through the fire with my projects
-          </a>
-          <a href="#contact" class="text-sm text-slate-300 hover:text-emerald-300 underline-offset-4 hover:underline">
-            Or just say hi — I read everything →
-          </a>
-        </div>
+  <section class="hero fade-in" id="about">
+    <h2>Builder · Learner · Still becoming</h2>
+    <p>I don't have a polished story. Just restarts, questions, code that breaks, and nights where clarity finally arrives.</p>
+    <p>This site is evidence that you can vanish into yourself and still choose to surface.</p>
+    <p class="tagline">From ashes, I rise — slowly, deliberately, carrying what I've learned from the fire.</p>
+  </section>
+  <!-- Skills -->
+  <section id="skills">
+    <h2 class="section-title">What I practice</h2>
+    <p class="skills-intro">I don't believe in "I already know this." Everything here is motion. Built through trial, error, late nights, and small breakthroughs nobody sees but me.</p>
+    <div class="skills-constellation">
+      <div class="skill-orb">Networking</div>
+      <div class="skill-orb">Cybersecurity</div>
+      <div class="skill-orb">Automation & Scripting</div>
+      <div class="skill-orb">Business Experiments</div>
+      <div class="skill-orb">Creative Projects</div>
+    </div>
+  </section>
+  <!-- Projects -->
+  <section id="projects">
+    <h2 class="section-title">Evidence</h2>
+    <div class="projects">
+      <div class="project-card fade-in">
+        <h3>To-Do App</h3>
+        <p>Built when scattered notes and mental clutter became too heavy. A calm space to capture tasks without drowning in them.</p>
+        <p>I learned that tiny UX choices — default states, empty screen language, forgiveness — transform tools into partners.</p>
+        <p>Simple is still real work.</p>
       </div>
-      <div class="md:justify-self-end">
-        <div class="relative w-full max-w-xs mx-auto">
-          <div class="absolute -inset-1 bg-gradient-to-tr from-emerald-500/60 via-cyan-500/40 to-sky-500/40 blur-2xl opacity-60"></div>
-          <div class="relative rounded-3xl border border-slate-800 bg-slate-900/80 px-6 py-6 shadow-xl">
-            <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-4">Signal from the dark</p>
-            <p class="text-sm text-slate-100 mb-3">
-              There was a time when everything felt like static — no direction, no clear signal, just noise in my head and on my screen. I stayed in that void longer than I like to admit.
-            </p>
-            <p class="text-sm text-slate-100 mb-3">
-              Now I’m learning to treat every small script, network trace, and idea as a tiny flare in the dark. Not a spotlight. Just a warm, stubborn glow that says, "I’m still here. I’m still trying."
-            </p>
-            <p class="text-xs text-emerald-300/90">
-              If you’ve ever felt like you disappeared into your own life, this is your reminder: cracks are where the light and the signal both get in.
-            </p>
-          </div>
-        </div>
+      <div class="project-card fade-in">
+        <h3>Security Checker CLI</h3>
+        <p>A command-line tool running basic checks: permissions, open ports, misconfigurations. Built to feel security, not just read about it.</p>
+        <p>Writing it forced prioritization — can't check everything, so what matters most?</p>
+        <p>Security is layered practice, like personal growth. Small, repeated, deliberate.</p>
+      </div>
+      <div class="project-card fade-in">
+        <h3>Social Media Map</h3>
+        <p>Data visualization mapping my social media use — time, topics, clusters. Turning invisible habits into visible patterns.</p>
+        <p>The data showed more than "too much time." It revealed emotional triggers, avoidance patterns, moments when I disappeared into feeds.</p>
+        <p>Attention is a system. If I can map it, I can reshape it.</p>
       </div>
     </div>
   </section>
-
-  <!-- About Section -->
-  <section id="about" class="border-t border-slate-800 bg-slate-950/80">
-    <div class="max-w-5xl mx-auto px-4 py-16">
-      <div class="max-w-2xl mb-8">
-        <h2 class="text-2xl sm:text-3xl font-semibold text-slate-50 mb-3">My story isn’t linear.</h2>
-        <p class="text-sm uppercase tracking-[0.2em] text-emerald-300 mb-4">About me</p>
+  <!-- Contact -->
+  <section id="contact">
+    <h2 class="section-title">Connect</h2>
+    <div class="contact-intro">
+      <p>Let's build, learn, or just talk. I value real connection over perfect introductions.</p>
+      <p>Reach out if something here resonates, if you're also rebuilding, or if you just want to share notes from your own journey.</p>
+    </div>
+    <div class="contact-methods">
+      <div class="contact-card">
+        <div class="contact-icon">✉️</div>
+        <h3>Email</h3>
+        <a href="mailto:your.email@example.com">your.email@example.com</a>
       </div>
-      <div class="grid gap-10 md:grid-cols-2">
-        <div class="space-y-5 text-sm sm:text-base text-slate-200 leading-relaxed">
-          <p>
-            I didn’t grow up with everything figured out. No perfect roadmap. No straight line. Just a mix of curiosity, pressure, expectations, and a quiet fear of not being “enough.”
-          </p>
-          <p>
-            I’ve tried paths that didn’t fit. I’ve failed exams, lost momentum, ghosted my own dreams, and watched other people move ahead while I felt stuck in place. There were days where getting out of bed felt heavier than any technical problem.
-          </p>
-          <p>
-            For a while, I thought those detours disqualified me. Now I’m learning they’re actually part of my foundation.
-          </p>
-          <p>
-            Today, I’m rebuilding from that place — slowly and honestly.
-          </p>
-        </div>
-        <div class="space-y-5 text-sm sm:text-base text-slate-200 leading-relaxed">
-          <div>
-            <h3 class="text-base font-semibold text-slate-50 mb-2">Where I am now</h3>
-            <p class="mb-3">
-              Right now, I’m studying, breaking things (on purpose), reading docs I don’t fully understand yet, and writing scripts that sometimes work and sometimes crash beautifully.
-            </p>
-            <p>
-              I’m building small tools, exploring networks and security basics, and running tiny experiments on what I can create with limited resources and a stubborn heart.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-base font-semibold text-slate-50 mb-2">What I value</h3>
-            <ul class="list-disc list-inside space-y-1 text-slate-200">
-              <li>Showing up, even when I’m scared or feel behind.</li>
-              <li>Learning in public — sharing the messy middle, not just the highlight reel.</li>
-              <li>Building things that are actually useful, even if they’re not impressive.</li>
-              <li>Kindness over ego. Depth over performance.</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-base font-semibold text-slate-50 mb-2">Where I want to go</h3>
-            <p class="mb-3">
-              I don’t just want a career. I want a life where my work and my growth help other people feel a little less alone and a little more capable.
-            </p>
-            <p>
-              I see myself building secure systems, useful tools, and creative projects that give people clarity and agency. I want to be the kind of person who keeps learning, keeps sharing, and leaves behind more light than noise.
-            </p>
-            <p class="text-emerald-300/90 text-sm mt-2">
-              This portfolio is not a finished product. It’s a small marker on a long road I fully intend to keep walking.
-            </p>
-          </div>
-        </div>
+      <div class="contact-card">
+        <div class="contact-icon">💻</div>
+        <h3>GitHub</h3>
+        <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">💼</div>
+        <h3>LinkedIn</h3>
+        <a href="https://linkedin.com/in/yourusername" target="_blank">linkedin.com/in/yourusername</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🐦</div>
+        <h3>X (Twitter)</h3>
+        <a href="https://x.com/yourusername" target="_blank">@yourusername</a>
       </div>
     </div>
   </section>
-
-  <!-- Skills Section -->
-  <section id="skills" class="border-t border-slate-800 bg-slate-950">
-    <div class="max-w-5xl mx-auto px-4 py-16">
-      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-        <div>
-          <p class="text-sm uppercase tracking-[0.2em] text-emerald-300 mb-2">Skills · In progress</p>
-          <h2 class="text-2xl sm:text-3xl font-semibold text-slate-50">What I’m learning to master.</h2>
-        </div>
-        <p class="text-sm text-slate-300 max-w-md">
-          I don’t believe in "I already know this." Everything here is a living process — built from curiosity, repetition, frustration, and small breakthroughs.
-        </p>
-      </div>
-      <div class="grid gap-6 md:grid-cols-2">
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
-          <h3 class="text-lg font-semibold text-slate-50 mb-1">Networking</h3>
-          <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-3">Seeing how everything connects</p>
-          <p class="text-sm text-slate-200 mb-3">
-            I’m learning how data really moves — from cables and packets to protocols and routing. I break down abstract concepts into simple mental models I can test in small labs and simulations.
-          </p>
-          <p class="text-sm text-emerald-300/90">
-            Approach: I learn by tracing paths, drawing diagrams, and asking "What actually happens under the hood?" until it stops being magic.
-          </p>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
-          <h3 class="text-lg font-semibold text-slate-50 mb-1">Cybersecurity</h3>
-          <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-3">Curious, careful, ethical</p>
-          <p class="text-sm text-slate-200 mb-3">
-            Security, to me, is about responsibility. I’m exploring how systems break, how attackers think, and how defenders can protect what matters — while respecting boundaries and ethics.
-          </p>
-          <p class="text-sm text-emerald-300/90">
-            Approach: I learn by experimenting in safe, isolated environments, reading real-world incident stories, and asking, "How could this have been prevented?"
-          </p>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
-          <h3 class="text-lg font-semibold text-slate-50 mb-1">Automation &amp; Scripting</h3>
-          <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-3">Making the boring parts lighter</p>
-          <p class="text-sm text-slate-200 mb-3">
-            I write small scripts to remove friction from my day: repetitive checks, file operations, cleanup tasks, and anything that makes my future self’s life easier.
-          </p>
-          <p class="text-sm text-emerald-300/90">
-            Approach: I start with a tiny annoyance and ask, "Can code do this for me?" Then I iterate, refactor, and try to make each script a little clearer than the last.
-          </p>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
-          <h3 class="text-lg font-semibold text-slate-50 mb-1">Business Experiments</h3>
-          <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-3">Ideas, tested in the real world</p>
-          <p class="text-sm text-slate-200 mb-3">
-            I like to turn vague ideas into small, low-risk experiments — tiny launches, quick landing pages, or prototypes that answer simple questions like "Does anyone actually want this?".
-          </p>
-          <p class="text-sm text-emerald-300/90">
-            Approach: I learn by shipping imperfect things, watching how people react, and treating every result — success or flop — as data, not a verdict on my worth.
-          </p>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 md:col-span-2">
-          <h3 class="text-lg font-semibold text-slate-50 mb-1">Creative Projects</h3>
-          <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-3">Making room for soul</p>
-          <p class="text-sm text-slate-200 mb-3">
-            Beyond technical work, I care about how things feel. I enjoy crafting small, thoughtful experiences — interfaces, stories, visualizations — that help people see something familiar in a new way.
-          </p>
-          <p class="text-sm text-emerald-300/90">
-            Approach: I learn by following my curiosity, letting myself play, and accepting that not everything I make has to be "useful" to be meaningful.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects" class="border-t border-slate-800 bg-slate-950/90">
-    <div class="max-w-5xl mx-auto px-4 py-16">
-      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-        <div>
-          <p class="text-sm uppercase tracking-[0.2em] text-emerald-300 mb-2">Projects · Small steps</p>
-          <h2 class="text-2xl sm:text-3xl font-semibold text-slate-50">Things I’ve built to learn.</h2>
-        </div>
-        <p class="text-sm text-slate-300 max-w-md">
-          These aren’t massive products. They’re honest attempts to solve my own problems, explore ideas, and practice finishing what I start.
-        </p>
-      </div>
-      <div class="space-y-6">
-        <article class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
-          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-            <h3 class="text-lg font-semibold text-slate-50">To-Do App</h3>
-            <p class="text-xs text-slate-400">Helps me remember what I forget.</p>
-          </div>
-          <p class="text-sm text-slate-200 mb-2">
-            A simple task manager I built for myself when sticky notes and scattered phone reminders stopped working.
-          </p>
-          <p class="text-sm text-slate-300 mb-2">
-            Problem I was solving: I kept losing track of small but important tasks. I wanted a calm, minimal space to capture what mattered without overwhelming me.
-          </p>
-          <p class="text-sm text-slate-300">
-            What I learned: How even tiny UX details — like default states, clear priorities, and gentle reminders — can make a tool feel like a partner instead of a nag. I also learned that building a "basic" app is still real practice and worth being proud of.
-          </p>
-        </article>
-
-        <article class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
-          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-            <h3 class="text-lg font-semibold text-slate-50">Security Checker CLI</h3>
-            <p class="text-xs text-slate-400">A small guard dog for my own systems.</p>
-          </div>
-          <p class="text-sm text-slate-200 mb-2">
-            A command-line tool that runs basic checks on local configurations and highlights potential weak spots.
-          </p>
-          <p class="text-sm text-slate-300 mb-2">
-            Problem I was solving: I wanted a quick way to scan my setup, practice thinking like an attacker and a defender, and create something that made security feel more tangible than just theory.
-          </p>
-          <p class="text-sm text-slate-300">
-            What I learned: How to structure CLI tools, parse output cleanly, and prioritize which checks matter most. More importantly, I learned that security is less about paranoia and more about building thoughtful, layered habits.
-          </p>
-        </article>
-
-        <article class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
-          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-            <h3 class="text-lg font-semibold text-slate-50">Social Media Map</h3>
-            <p class="text-xs text-slate-400">Seeing the scroll from above.</p>
-          </div>
-          <p class="text-sm text-slate-200 mb-2">
-            A data visualization project that maps how time, posts, or topics cluster across my social media usage.
-          </p>
-          <p class="text-sm text-slate-300 mb-2">
-            Problem I was solving: I wanted to confront how I actually spend my attention — not how I think I do. Turning data into visuals made my habits impossible to ignore.
-          </p>
-          <p class="text-sm text-slate-300">
-            What I learned: How powerful visual feedback can be in changing behavior. I also got better at working with APIs, cleaning data, and designing visuals that told a story without shouting.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="border-t border-slate-800 bg-slate-950">
-    <div class="max-w-5xl mx-auto px-4 py-16">
-      <div class="max-w-2xl mb-8">
-        <p class="text-sm uppercase tracking-[0.2em] text-emerald-300 mb-2">Contact</p>
-        <h2 class="text-2xl sm:text-3xl font-semibold text-slate-50 mb-4">Let’s build, learn, or just talk.</h2>
-        <p class="text-sm sm:text-base text-slate-300">
-          I’m open to conversations that feel human first: collaboration, mentorship, guidance, or simply sharing stories from the journey. You don’t have to have a job offer or a big opportunity to reach out.
-        </p>
-      </div>
-      <div class="grid gap-8 md:grid-cols-[2fr,3fr] items-start">
-        <div class="space-y-4 text-sm sm:text-base text-slate-200">
-          <p>
-            If something in my story resonates with you — maybe you’ve also taken the long way around, or you’re restarting after a rough season — I’d be genuinely glad to hear from you.
-          </p>
-          <p>
-            We can trade notes on projects, swap resources, brainstorm ideas, or simply talk about what it means to keep going when the path is unclear.
-          </p>
-          <p class="text-emerald-300/90 text-sm">
-            Real connection matters more to me than perfect timing or perfect words.
-          </p>
-        </div>
-        <div>
-          <div class="grid gap-4 text-sm sm:text-base">
-            <a href="mailto:your.email@example.com" class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/70 px-4 py-3 hover:border-emerald-400 hover:bg-slate-900 transition">
-              <span class="text-slate-50">Email</span>
-              <span class="text-xs text-slate-400">your.email@example.com</span>
-            </a>
-            <a href="https://github.com/your-github" target="_blank" class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/70 px-4 py-3 hover:border-emerald-400 hover:bg-slate-900 transition">
-              <span class="text-slate-50">GitHub</span>
-              <span class="text-xs text-slate-400">github.com/your-github</span>
-            </a>
-            <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/70 px-4 py-3 hover:border-emerald-400 hover:bg-slate-900 transition">
-              <span class="text-slate-50">LinkedIn</span>
-              <span class="text-xs text-slate-400">linkedin.com/in/your-linkedin</span>
-            </a>
-            <a href="https://x.com/your-handle" target="_blank" class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/70 px-4 py-3 hover:border-emerald-400 hover:bg-slate-900 transition">
-              <span class="text-slate-50">X (Twitter)</span>
-              <span class="text-xs text-slate-400">x.com/your-handle</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950/95">
-    <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-xs sm:text-sm text-slate-400">
-        A quiet reminder to myself: going slowly is still going.
-      </p>
-      <p class="text-xs text-slate-500">© <span id="year"></span> Avinab Maharjan</p>
-    </div>
-  </footer>
-
-  <script>
-    // Set current year in footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+</div>
+<!-- Footer -->
+<footer>
+  <p class="footer-quote">Even slow rising is still rising.</p>
+  <p>&copy; 2025 Avinab Maharjan</p>
+</footer>
+<!-- Scroll to Top Button -->
+<button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
+<script>
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('nav');
+  
+  menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
+    nav.classList.toggle('active');
+  });
+  
+  // Close mobile menu when clicking a link
+  const navLinks = nav.querySelectorAll('a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle.classList.remove('active');
+      nav.classList.remove('active');
+    });
+  });
+  // Header scroll effect
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+  // Scroll to top button
+  const scrollTopBtn = document.getElementById('scrollTop');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      scrollTopBtn.classList.add('visible');
+    } else {
+      scrollTopBtn.classList.remove('visible');
+    }
+  });
+  
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+  // Intersection Observer for fade-in animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+  
+  // Observe project cards
+  const projectCards = document.querySelectorAll('.project-card');
+  projectCards.forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'all 0.6s ease-out';
+    observer.observe(card);
+  });
+  // Skill orb click effect
+  const skillOrbs = document.querySelectorAll('.skill-orb');
+  skillOrbs.forEach(orb => {
+    orb.addEventListener('click', function() {
+      this.style.animation = 'none';
+      setTimeout(() => {
+        this.style.animation = 'floatOrb 4s ease-in-out infinite';
+      }, 10);
+    });
+  });
+  // Smooth scroll for navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+</script>
 </body>
 </html>
