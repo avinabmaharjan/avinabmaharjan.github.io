@@ -1,620 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Avinab Maharjan — Digital Phoenix. A quiet record of a climb.">
-    <meta name="author" content="Avinab Maharjan">
-    <title>Avinab Maharjan — Phoenix</title>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avinab Maharjan | Rebuilding From Zero</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --void: #050505;
-            --void-glass: rgba(5, 5, 5, 0.85);
-            --surface: #111111;
-            --ink: #EDEDED;
-            --ink-dim: #888888;
-            --ink-ghost: #444444;
-            --signal: #FF5F1F;
-            --signal-glow: rgba(255, 95, 31, 0.15);
-            --border: rgba(255, 255, 255, 0.08);
-            --ease-magnet: cubic-bezier(0.23, 1, 0.32, 1);
-            --width: 1000px;
-            --font-body: 'Inter', sans-serif;
-            --font-head: 'Playfair Display', serif;
-            --font-code: 'JetBrains Mono', monospace;
-        }
-
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        html { 
-            scroll-behavior: smooth; 
-            background-color: var(--void);
-        }
-
-        body {
-            color: var(--ink);
-            font-family: var(--font-body);
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        ::selection {
-            background: var(--signal);
-            color: var(--void);
-        }
-
-        .layout {
-            max-width: var(--width);
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        section {
-            padding: 8rem 0;
-            position: relative;
-        }
-
-        h1 {
-            font-family: var(--font-head);
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 400;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.5rem;
-        }
-
-        h1 span.highlight {
-            color: transparent;
-            -webkit-text-stroke: 1px var(--ink);
-            position: relative;
-            display: inline-block;
-        }
-        
-        h1 span.highlight::after {
-            content: "Phoenix";
-            position: absolute; 
-            top: 0; left: 0;
-            width: 0%;
-            height: 100%;
-            color: var(--signal);
-            -webkit-text-stroke: 0;
-            border-right: 2px solid var(--signal);
-            overflow: hidden;
-            white-space: nowrap;
-            transition: width 1.5s var(--ease-magnet);
-        }
-        
-        .loaded h1 span.highlight::after { width: 100%; border-right: none; }
-
-        h2 {
-            font-family: var(--font-head);
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            font-weight: 400;
-        }
-
-        .label-mono {
-            font-family: var(--font-code);
-            font-size: 0.75rem;
-            color: var(--signal);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .text-body {
-            font-size: 1.125rem;
-            color: var(--ink-dim);
-            max-width: 600px;
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-        
-        .chapter-marker {
-            font-family: var(--font-code);
-            font-size: 0.85rem;
-            color: var(--ink-ghost);
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .nav-glass {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 90px;
-            background: var(--void-glass);
-            backdrop-filter: blur(12px);
-            z-index: 999;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            transition: transform 0.4s var(--ease-magnet);
-        }
-
-        .nav-content {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand {
-            font-family: var(--font-head);
-            font-style: italic;
-            font-size: 1.25rem;
-            text-decoration: none;
-            color: var(--ink);
-        }
-
-        .menu-items {
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-link {
-            font-family: var(--font-code);
-            font-size: 0.8rem;
-            color: var(--ink-dim);
-            text-decoration: none;
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover { color: var(--signal); }
-        
-        .hero-wrap {
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-top: 100px;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: var(--font-code);
-            font-size: 0.75rem;
-            color: var(--ink-dim);
-            border: 1px solid var(--border);
-            padding: 6px 12px;
-            border-radius: 100px;
-            margin-bottom: 2rem;
-        }
-
-        .pulse-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--signal);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--signal);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse { 
-            0% { opacity: 1; transform: scale(1); } 
-            50% { opacity: 0.5; transform: scale(0.9); } 
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .discipline-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-
-        .discipline-card {
-            background: rgba(255,255,255,0.015);
-            border: 1px solid var(--border);
-            padding: 2rem;
-            border-radius: 4px;
-            transition: all 0.4s var(--ease-magnet);
-        }
-
-        .discipline-card:hover {
-            border-color: var(--signal);
-            background: rgba(255, 255, 255, 0.03);
-            transform: translateY(-2px);
-        }
-
-        .discipline-card h3 {
-            font-size: 1.125rem;
-            margin-bottom: 0.5rem;
-            color: var(--ink);
-        }
-
-        .discipline-sub {
-            font-size: 0.8rem;
-            color: var(--signal);
-            font-family: var(--font-code);
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .project-row {
-            display: grid;
-            grid-template-columns: 150px 1fr;
-            gap: 2rem;
-            padding: 3rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .project-meta {
-            font-family: var(--font-code);
-            font-size: 0.75rem;
-            color: var(--ink-dim);
-            text-transform: uppercase;
-        }
-
-        .project-info h3 {
-            font-size: 1.5rem;
-            font-family: var(--font-head);
-            margin-bottom: 0.5rem;
-        }
-        
-        .project-desc {
-            color: var(--ink-dim);
-            max-width: 500px;
-        }
-
-        .identity-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .link-capsule {
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 450px;
-            padding: 1.5rem;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--ink);
-            transition: all 0.3s var(--ease-magnet);
-        }
-
-        .link-capsule span:first-child {
-            font-family: var(--font-head);
-            font-size: 1.1rem;
-            font-style: italic;
-        }
-
-        .link-capsule span:last-child {
-            font-family: var(--font-code);
-            font-size: 0.75rem;
-            color: var(--ink-dim);
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s ease;
-        }
-
-        .link-capsule:hover {
-            border-color: var(--signal);
-            transform: translateX(4px);
-        }
-
-        .link-capsule:hover span:last-child {
-            opacity: 1;
-            transform: translateX(0);
-            color: var(--signal);
-        }
-
-        footer {
-            padding: 6rem 0 2rem;
-            border-top: 1px solid var(--border);
-            margin-top: 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            opacity: 0.4;
-        }
-        
-        .copyright { font-family: var(--font-code); font-size: 0.75rem; }
-        
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s var(--ease-magnet), transform 1s var(--ease-magnet);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            .layout { padding: 0 1.5rem; }
-            section { padding: 5rem 0; }
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
-            
-            .nav-content {
-                overflow-x: auto;
-                padding-bottom: 10px; /* Hide scrollbar buffer */
-            }
-            
-            .nav-content::-webkit-scrollbar { display: none; }
-
-            .menu-items {
-                gap: 1.5rem;
-            }
-            
-            .brand { margin-right: 2rem; flex-shrink: 0; }
-
-            .project-row { 
-                grid-template-columns: 1fr; 
-                gap: 1rem; 
-            }
-            
-            .project-meta { 
-                display: flex;
-                justify-content: space-between;
-                width: 100%;
-                border-bottom: 1px solid rgba(255,255,255,0.05);
-                padding-bottom: 0.5rem;
-                margin-bottom: 1rem;
-            }
-            
-            .discipline-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .link-capsule { max-width: 100%; }
-            
-            .nav-link { font-size: 0.7rem; }
-            
-            footer { flex-direction: column; gap: 1rem; text-align: center; }
-        }
-    </style>
-</head>
-<body id="top">
-
-    <nav class="nav-glass">
-        <div class="layout nav-content">
-            <a href="#top" class="brand">AM.</a>
-            <div class="menu-items">
-                <a href="#about" class="nav-link">01.JOURNEY</a>
-                <a href="#practice" class="nav-link">02.PRACTICE</a>
-                <a href="#work" class="nav-link">03.WORK</a>
-                <a href="#connect" class="nav-link">04.SIGNAL</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="layout">
-        <header class="hero-wrap reveal">
-            <div class="status-badge">
-                <div class="pulse-dot"></div>
-                REBUILDING FROM ZERO
-            </div>
-            <h1>
-                Trace of a <span class="highlight">Quiet Climb</span>.<br>
-                <span style="font-size: 0.4em; font-family: var(--font-code); letter-spacing: -0.03em; opacity: 0.6; display:block; margin-top: 20px;">
-                    [ Builder · Learner · Still Becoming ]
-                </span>
-            </h1>
-            <p class="text-body">
-                I wasn't born talented. I wasn’t the smart kid or the disciplined one.
-                My life has been a series of detours—restarts, quiet failures, and vanishings.
-                <br><br>
-                Now, I choose to surface. This site isn’t a portfolio of mastery; 
-                it is a log of my attempt to emerge from the void. 
-                From ashes, slowly.
-            </p>
-            <a href="#work" style="font-family: var(--font-code); color: var(--signal); text-decoration: none; border-bottom: 1px solid var(--signal); padding-bottom: 4px; width: fit-content;">Explore the Evidence &darr;</a>
-        </header>
-    </div>
-
-    <section id="about">
-        <div class="layout">
-            <span class="chapter-marker">01 // THE NARRATIVE</span>
-            <div class="reveal">
-                <h2>My story isn't linear.</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem;">
-                    <div>
-                        <span class="label-mono">BACKGROUND</span>
-                        <p class="text-body" style="font-size: 1rem;">
-                            I used to run from hard things. I procrastinated, avoided responsibility, and let fear dictate my timeline. 
-                            I watched others move ahead while I fought invisible battles that don’t make it to Instagram. 
-                            The truth is less heroic: I was stuck.
-                        </p>
-                    </div>
-                    <div>
-                        <span class="label-mono">CURRENT REALITY</span>
-                        <p class="text-body" style="font-size: 1rem;">
-                            I decided to stop vanishing. Now, I treat every restart as a rebirth. 
-                            I study, I break code, I build scripts that crash, and then I fix them.
-                            I’m leaving breadcrumbs here to find my way back. This is my anchor.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="practice">
-        <div class="layout">
-            <span class="chapter-marker">02 // THE DISCIPLINE</span>
-            <h2 class="reveal">What I practice.</h2>
-            <p class="reveal text-body">These aren't masteries. These are active fires I am tending to.</p>
-            
-            <div class="discipline-grid reveal">
-                <div class="discipline-card">
-                    <span class="discipline-sub">CONNECTIVITY</span>
-                    <h3>Networking</h3>
-                    <p style="color: var(--ink-ghost); font-size: 0.9rem; margin-top: 0.5rem;">
-                        Tracing invisible paths. Understanding how data travels beneath the surface. Mapping the void.
-                    </p>
-                </div>
-
-                <div class="discipline-card">
-                    <span class="discipline-sub">DEFENSE</span>
-                    <h3>Cybersecurity</h3>
-                    <p style="color: var(--ink-ghost); font-size: 0.9rem; margin-top: 0.5rem;">
-                        Curiosity with boundaries. Breaking things ethically to understand how they hold together.
-                    </p>
-                </div>
-
-                <div class="discipline-card">
-                    <span class="discipline-sub">EFFICIENCY</span>
-                    <h3>Automation</h3>
-                    <p style="color: var(--ink-ghost); font-size: 0.9rem; margin-top: 0.5rem;">
-                        Making the heavy feel lighter. Writing code to carry the weight I used to fear.
-                    </p>
-                </div>
-
-                <div class="discipline-card">
-                    <span class="discipline-sub">MARKET</span>
-                    <h3>Business Exp.</h3>
-                    <p style="color: var(--ink-ghost); font-size: 0.9rem; margin-top: 0.5rem;">
-                        Testing ideas in the real world. Shipping imperfect things. Treating rejection as data.
-                    </p>
-                </div>
-
-                <div class="discipline-card">
-                    <span class="discipline-sub">SOUL WORK</span>
-                    <h3>Creative Projects</h3>
-                    <p style="color: var(--ink-ghost); font-size: 0.9rem; margin-top: 0.5rem;">
-                        Making room for the abstract. Not everything needs to be "useful" to be valid.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="work">
-        <div class="layout">
-            <span class="chapter-marker">03 // THE EVIDENCE</span>
-            <h2 class="reveal">Things I've built.</h2>
-            
-            <div class="reveal">
-                <div class="project-row">
-                    <div class="project-meta">
-                        001 · UTILITY
-                        <span style="color: var(--signal); display:block;">TO-DO APP</span>
-                    </div>
-                    <div class="project-info">
-                        <h3>Memory Architecture</h3>
-                        <p class="project-desc">
-                            My mind is noisy. I built this to remember what I forget. 
-                            A minimalist task manager focusing on "calm" states rather than productivity porn.
-                            <br><br>
-                            <span style="font-family: var(--font-code); font-size: 0.8rem; color: var(--ink-dim);">
-                                Insight: Building for yourself teaches you self-kindness.
-                            </span>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="project-row">
-                    <div class="project-meta">
-                        002 · CLI
-                        <span style="color: var(--signal); display:block;">SEC-CHECKER</span>
-                    </div>
-                    <div class="project-info">
-                        <h3>The Guard Dog</h3>
-                        <p class="project-desc">
-                            A command-line tool running basic checks (permissions, ports). 
-                            I needed a ritual to feel secure, not just read about it.
-                            <br><br>
-                            <span style="font-family: var(--font-code); font-size: 0.8rem; color: var(--ink-dim);">
-                                Insight: Security is a habit, not a switch.
-                            </span>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="project-row">
-                    <div class="project-meta">
-                        003 · VIZ
-                        <span style="color: var(--signal); display:block;">ATTENTION MAP</span>
-                    </div>
-                    <div class="project-info">
-                        <h3>Social Pattern Map</h3>
-                        <p class="project-desc">
-                            Turning invisible scrolling habits into data visualizations. 
-                            I wanted to see exactly where I was vanishing.
-                            <br><br>
-                            <span style="font-family: var(--font-code); font-size: 0.8rem; color: var(--ink-dim);">
-                                Insight: If you can map it, you can change it.
-                            </span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="connect">
-        <div class="layout">
-            <span class="chapter-marker">04 // SIGNAL</span>
-            <h2 class="reveal">Compare notes from the void.</h2>
-            <p class="reveal text-body">
-                I value resonance over networking. If you are rebuilding yourself, let’s talk. 
-                No agenda needed.
-            </p>
-
-            <div class="identity-grid reveal">
-                <a href="mailto:avinabmaharjan@protonmail.com" class="link-capsule">
-                    <span>Email Protocol</span>
-                    <span>ENCRYPTED::SIGNAL &rarr;</span>
-                </a>
-                
-                <a href="https://github.com/avinabmaharjan" target="_blank" class="link-capsule">
-                    <span>GitHub</span>
-                    <span>VIEW REPOSITORIES &rarr;</span>
-                </a>
-
-                <a href="https://x.com/avinab_maharjan" target="_blank" class="link-capsule">
-                    <span>X / Twitter</span>
-                    <span>THOUGHT STREAM &rarr;</span>
-                </a>
-
-                <a href="https://www.linkedin.com/in/avinab-maharjan-033a6a33a/" target="_blank" class="link-capsule">
-                    <span>LinkedIn</span>
-                    <span>PROFESSIONAL RECORD &rarr;</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <div class="layout">
-        <footer>
-            <div class="brand" style="font-size: 1rem;">AM.</div>
-            <p style="font-family: var(--font-head); font-style: italic; color: var(--signal);">
-                "Even slow rising is still rising."
-            </p>
-            <div class="copyright">© 2025 AVINAB MAHARJAN</div>
-        </footer>
-    </div>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -40px 0px"
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        window.addEventListener('load', () => {
-            document.body.classList.add('loaded');
-        });
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              void: '#050505',
+              signal: '#FF5F1F',
+              glass: 'rgba(255, 255, 255, 0.03)',
+              'glass-border': 'rgba(255, 255, 255, 0.08)',
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', 'serif'],
+              sans: ['"Inter"', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            },
+            transitionTimingFunction: {
+              'magnet': 'cubic-bezier(0.23, 1, 0.32, 1)',
+            },
+            animation: {
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            }
+          }
+        }
+      }
     </script>
-</body>
+    <style>
+      html {
+        scroll-padding-top: 5rem; /* Accounts for fixed header (h-20 = 5rem) */
+      }
+      body {
+        background-color: #050505;
+        color: #e5e5e5;
+        overflow-x: hidden;
+      }
+      
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #050505;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #FF5F1F;
+      }
+
+      /* Reveal Animation Utilities */
+      .reveal-section {
+        opacity: 0;
+        transform: translateY(40px) perspective(1000px) rotateY(5deg);
+        transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+        will-change: transform, opacity;
+      }
+      .reveal-section.active {
+        opacity: 1;
+        transform: translateY(0) perspective(1000px) rotateY(0deg);
+      }
+
+      /* Signal Link (Minimalist Icon Button) */
+      .signal-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 1rem;
+        background-color: rgba(23, 23, 23, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #737373; /* Neutral 500 */
+        text-decoration: none;
+        transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+        backdrop-filter: blur(4px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .signal-link:hover {
+        transform: translateY(-4px) scale(1.05);
+        background-color: rgba(23, 23, 23, 0.9);
+        border-color: rgba(255, 95, 31, 0.5); /* Signal orange */
+        color: #FF5F1F;
+        box-shadow: 0 10px 40px -10px rgba(255, 95, 31, 0.25);
+      }
+
+      /* Hero Text Stagger Animation */
+      @keyframes letter-reveal {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-char {
+        display: inline-block;
+        opacity: 0;
+        animation: letter-reveal 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      }
+
+      /* Typography Selection */
+      ::selection {
+        background: #FF5F1F;
+        color: #000;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
