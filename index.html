@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avinab Maharjan | 80s Retro Portfolio</title>
-    <meta name="description" content="Avinab Maharjan - Builder, Student, Explorer. A retro-futuristic portfolio showcasing networking, cybersecurity, and automation projects.">
+    <title>Avinab Maharjan | Portfolio</title>
+    <meta name="description" content="Avinab Maharjan - Builder, Student, Explorer. A retro-futuristic portfolio exploring networking, cybersecurity, and automation.">
     <meta name="theme-color" content="#0a0a12">
     
-    <!-- FONTS: Syne (Display), Space Grotesk (Body), Space Mono (Code/UI), VT323 (Retro) -->
+    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=VT323&display=swap" rel="stylesheet">
 
     <style>
         /* 
@@ -26,10 +26,12 @@
             --neon-yellow: #ffe600;
             --neon-purple: #b24bf3;
             --neon-green: #39ff14;
+            --neon-orange: #ff6b35;
             
             /* Backgrounds */
             --bg-deep: #0a0a12;
             --bg-card: #12121f;
+            --bg-elevated: #1a1a2e;
             --bg-glass: rgba(18, 18, 31, 0.85);
             
             /* Typography */
@@ -38,13 +40,23 @@
             --font-mono: 'Space Mono', monospace;
             --font-pixel: 'VT323', monospace;
             
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #666677;
+
             /* Animation Easings */
             --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
             --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-snap: cubic-bezier(0.68, -0.55, 0.265, 1.55);
             
-            /* Spacing */
-            --container-width: 1200px;
-            --header-height: 80px;
+            /* Spacing (Organic values) */
+            --container-width: 1100px;
+            --header-height: 82px;
+            --space-xs: 13px;
+            --space-sm: 27px;
+            --space-md: 42px;
+            --space-lg: 76px;
         }
 
         *, *::before, *::after {
@@ -60,9 +72,9 @@
 
         body {
             background-color: var(--bg-deep);
-            color: #ffffff;
+            color: var(--text-primary);
             font-family: var(--font-body);
-            line-height: 1.6;
+            line-height: 1.65;
             overflow-x: hidden;
             cursor: none; /* Custom cursor takes over */
         }
@@ -74,13 +86,13 @@
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 7px; }
         ::-webkit-scrollbar-track { background: var(--bg-deep); }
         ::-webkit-scrollbar-thumb { 
-            background: var(--neon-cyan); 
+            background: #333; 
             border-radius: 4px;
         }
-        ::-webkit-scrollbar-thumb:hover { background: var(--neon-pink); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
 
         /* 
          * ══════════════════════════════════════════════════════════════
@@ -94,13 +106,13 @@
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
             z-index: 9000;
-            opacity: 0.04;
+            opacity: 0.035;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
         /* Container */
         .container {
-            width: 90%;
+            width: 88%;
             max-width: var(--container-width);
             margin: 0 auto;
             position: relative;
@@ -108,17 +120,53 @@
         }
 
         /* Typography Utilities */
-        .text-neon-pink { color: var(--neon-pink); text-shadow: 0 0 10px rgba(255, 45, 149, 0.5); }
-        .text-neon-cyan { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0, 245, 255, 0.5); }
-        .text-neon-yellow { color: var(--neon-yellow); text-shadow: 0 0 10px rgba(255, 230, 0, 0.5); }
+        .text-neon-pink { color: var(--neon-pink); }
+        .text-neon-cyan { color: var(--neon-cyan); }
+        .text-neon-yellow { color: var(--neon-yellow); }
+        .text-neon-purple { color: var(--neon-purple); }
         
         .font-mono { font-family: var(--font-mono); }
         .font-display { font-family: var(--font-display); }
 
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s var(--ease-smooth);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            background: rgba(0, 245, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            color: var(--text-secondary);
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-left: var(--space-xs);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
         /* 
          * ══════════════════════════════════════════════════════════════
          *  LOADING SCREEN
-         *  "Booting nostalgia.exe..."
          * ══════════════════════════════════════════════════════════════
          */
         .loader {
@@ -131,7 +179,6 @@
             align-items: center;
             justify-content: center;
             transition: opacity 0.8s var(--ease-smooth), visibility 0.8s;
-            overflow: hidden;
         }
 
         .loader.hidden {
@@ -140,20 +187,18 @@
             pointer-events: none;
         }
 
-        /* Retro Sun */
         .retro-sun {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             background: linear-gradient(to bottom, var(--neon-yellow) 0%, var(--neon-pink) 50%, var(--neon-purple) 100%);
             position: absolute;
-            top: 40%;
+            top: 38%;
             left: 50%;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 60px rgba(255, 45, 149, 0.4);
+            box-shadow: 0 0 50px rgba(255, 45, 149, 0.3);
         }
         
-        /* Sun Stripes (Clip Path trick) */
         .retro-sun::after {
             content: '';
             position: absolute;
@@ -168,7 +213,6 @@
             background-size: 100% 100%;
         }
 
-        /* Perspective Grid */
         .grid-floor {
             position: absolute;
             bottom: 0;
@@ -177,11 +221,11 @@
             height: 50%;
             background: 
                 linear-gradient(transparent 0%, var(--bg-deep) 100%),
-                linear-gradient(90deg, rgba(0, 245, 255, 0.3) 1px, transparent 1px),
-                linear-gradient(0deg, rgba(0, 245, 255, 0.3) 1px, transparent 1px);
+                linear-gradient(90deg, rgba(178, 75, 243, 0.2) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(178, 75, 243, 0.2) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
-            transform: perspective(500px) rotateX(60deg);
-            animation: gridMove 2s linear infinite;
+            transform: perspective(400px) rotateX(65deg);
+            animation: gridMove 3s linear infinite;
         }
 
         @keyframes gridMove {
@@ -189,55 +233,54 @@
             to { background-position: 0 0, 0 40px, 0 40px; }
         }
 
-        /* Chase Scene */
         .chase-scene {
             position: relative;
             z-index: 10;
-            width: 300px;
-            height: 100px;
-            margin-top: 100px;
+            width: 280px;
+            height: 80px;
+            margin-top: 80px;
         }
 
         .runner {
-            font-size: 3rem;
+            font-size: 2.8rem;
             position: absolute;
             bottom: 0;
             animation: bounce 0.4s infinite alternate;
         }
 
-        .cat { left: 20%; animation-delay: 0.1s; filter: drop-shadow(0 0 10px var(--neon-cyan)); }
-        .dog { left: 60%; filter: drop-shadow(0 0 10px var(--neon-pink)); }
+        .cat { left: 20%; animation-delay: 0.1s; filter: drop-shadow(0 0 8px var(--neon-cyan)); }
+        .dog { left: 65%; filter: drop-shadow(0 0 8px var(--neon-pink)); }
 
         @keyframes bounce {
             from { transform: translateY(0); }
-            to { transform: translateY(-15px); }
+            to { transform: translateY(-12px); }
         }
 
         .loader-text {
             margin-top: 2rem;
             font-family: var(--font-pixel);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--neon-cyan);
             text-transform: uppercase;
             letter-spacing: 2px;
             z-index: 10;
         }
 
-        .loader-bar {
-            width: 200px;
-            height: 4px;
-            background: #333;
-            margin-top: 10px;
+        .loader-bar-bg {
+            width: 220px;
+            height: 3px;
+            background: #222;
+            margin-top: 15px;
             position: relative;
-            overflow: hidden;
             z-index: 10;
+            overflow: hidden;
         }
 
         .loader-progress {
             position: absolute;
             top: 0; left: 0; height: 100%; width: 0%;
             background: var(--neon-pink);
-            animation: loadProgress 2.5s ease-in-out forwards;
+            animation: loadProgress 2.2s ease-in-out forwards;
         }
 
         @keyframes loadProgress { to { width: 100%; } }
@@ -247,35 +290,41 @@
          *  CUSTOM CURSOR
          * ══════════════════════════════════════════════════════════════
          */
-        .cursor-dot, .cursor-circle {
+        .cursor-dot {
+            width: 4px; height: 4px;
+            background: var(--neon-pink);
             position: fixed;
-            top: 0; left: 0;
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-        }
-        
-        .cursor-dot {
-            width: 8px; height: 8px;
-            background: var(--neon-pink);
+            transition: opacity 0.2s;
         }
 
-        .cursor-circle {
-            width: 40px; height: 40px;
-            border: 1px solid var(--neon-cyan);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        .cursor-ring {
+            width: 16px; height: 16px;
+            border: 1px solid rgba(0, 245, 255, 0.4);
+            background: transparent;
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.15s ease-out, height 0.15s ease-out, border-color 0.2s, opacity 0.2s;
         }
 
-        .cursor-circle.hovered {
-            width: 60px; height: 60px;
-            background: rgba(0, 245, 255, 0.1);
+        .cursor-ring.hover {
+            width: 24px; height: 24px;
             border-color: var(--neon-pink);
-            mix-blend-mode: difference;
+            background: rgba(255, 45, 149, 0.05);
+        }
+
+        .cursor-dot.hidden, .cursor-ring.hidden {
+            opacity: 0;
         }
 
         @media (max-width: 768px) {
-            .cursor-dot, .cursor-circle { display: none; }
+            .cursor-dot, .cursor-ring { display: none; }
             body { cursor: auto; }
         }
 
@@ -291,10 +340,10 @@
             z-index: 100;
             display: flex;
             align-items: center;
-            backdrop-filter: blur(10px);
-            background: rgba(10, 10, 18, 0.7);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s;
+            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 18, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: transform 0.4s var(--ease-smooth);
         }
 
         header.hidden { transform: translateY(-100%); }
@@ -309,29 +358,28 @@
 
         .logo {
             font-family: var(--font-display);
-            font-weight: 800;
-            font-size: 1.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
             color: white;
             text-decoration: none;
-            position: relative;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
         }
-
-        .logo span { color: var(--neon-pink); }
+        
+        .logo span { color: var(--neon-cyan); }
 
         nav ul {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         nav a {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-secondary);
             text-decoration: none;
             font-family: var(--font-mono);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
             position: relative;
             transition: color 0.3s;
         }
@@ -339,27 +387,27 @@
         nav a::after {
             content: '';
             position: absolute;
-            bottom: -5px; left: 0; width: 0; height: 2px;
-            background: var(--neon-cyan);
+            bottom: -4px; left: 0; width: 0; height: 1px;
+            background: var(--neon-pink);
             transition: width 0.3s var(--ease-out-back);
         }
 
         nav a:hover { color: white; }
         nav a:hover::after { width: 100%; }
 
-        /* Mobile Menu Toggle */
         .menu-btn {
             display: none;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
             background: none;
             border: none;
             cursor: pointer;
+            padding: 10px;
         }
 
         .menu-btn span {
-            width: 30px; height: 2px;
-            background: var(--neon-cyan);
+            width: 24px; height: 2px;
+            background: var(--text-primary);
             transition: 0.3s;
         }
 
@@ -377,105 +425,95 @@
             overflow: hidden;
         }
 
-        /* Background Glows */
-        .orb {
+        /* Ambient Glows */
+        .glow-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
+            filter: blur(90px);
+            opacity: 0.25;
             z-index: 0;
-            animation: float 10s ease-in-out infinite;
+            animation: float 12s ease-in-out infinite;
         }
-        .orb-1 { width: 300px; height: 300px; background: var(--neon-pink); top: 10%; right: -50px; }
-        .orb-2 { width: 400px; height: 400px; background: var(--neon-cyan); bottom: 10%; left: -100px; animation-delay: -5s; }
+        .glow-1 { width: 400px; height: 400px; background: var(--neon-pink); top: -50px; right: -100px; }
+        .glow-2 { width: 500px; height: 500px; background: var(--neon-purple); bottom: -100px; left: -150px; animation-delay: -6s; }
 
         @keyframes float {
             0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-30px, 50px); }
+            50% { transform: translate(-20px, 40px); }
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
+            max-width: 900px;
         }
 
-        .pre-title {
+        .greeting {
             font-family: var(--font-mono);
-            color: var(--neon-yellow);
-            margin-bottom: 1rem;
-            display: inline-block;
-            border: 1px solid var(--neon-yellow);
-            padding: 0.2rem 0.8rem;
-            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            font-size: 0.85rem;
+            margin-bottom: var(--space-xs);
+            display: block;
+            opacity: 0; /* Animated in */
         }
 
-        /* THE NAME - Fluid Typography */
-        h1 {
+        /* MAIN HEADLINE - Not the name */
+        .headline {
             font-family: var(--font-display);
             font-weight: 800;
-            line-height: 0.95;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            line-height: 1.1;
+            margin-bottom: var(--space-sm);
+            letter-spacing: -0.02em;
+            color: white;
+            opacity: 0;
         }
 
-        .name-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.2em;
-            font-size: clamp(3rem, 12vw, 8rem); /* Fluid sizing */
+        /* Subordinate Name */
+        .byline {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: var(--space-md);
+            opacity: 0;
         }
 
-        .name-part {
-            background: linear-gradient(180deg, #fff 0%, #a5a5a5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(255,255,255,0.2));
-            transition: transform 0.3s;
-        }
-        
-        .name-part:hover {
-            transform: skewX(-10deg);
+        .name-accent {
+            color: white;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255, 45, 149, 0.4);
+            padding-bottom: 1px;
         }
 
         /* Interactive Tags */
         .hero-tags {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2.5rem;
+            gap: 12px;
+            margin-bottom: var(--space-md);
             flex-wrap: wrap;
+            opacity: 0;
         }
 
         .tag-btn {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #ccc;
-            padding: 0.8rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-secondary);
+            padding: 8px 16px;
             font-family: var(--font-mono);
+            font-size: 0.8rem;
             cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.2s;
+            border-radius: 2px;
         }
 
-        .tag-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: 0.5s;
+        .tag-btn:hover {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            background: rgba(255, 45, 149, 0.05);
+            transform: translateY(-2px);
         }
 
-        .tag-btn:hover::before { left: 100%; }
-        .tag-btn:hover { border-color: var(--neon-pink); color: var(--neon-pink); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255, 45, 149, 0.2); }
-        .tag-btn:nth-child(2):hover { border-color: var(--neon-cyan); color: var(--neon-cyan); box-shadow: 0 5px 15px rgba(0, 245, 255, 0.2); }
-        .tag-btn:nth-child(3):hover { border-color: var(--neon-yellow); color: var(--neon-yellow); box-shadow: 0 5px 15px rgba(255, 230, 0, 0.2); }
-
-        .hero-desc {
-            max-width: 600px;
-            font-size: 1.1rem;
-            color: #a0a0b0;
-            margin-bottom: 3rem;
-        }
+        .hero-cta { opacity: 0; }
 
         /* 
          * ══════════════════════════════════════════════════════════════
@@ -485,8 +523,8 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
             z-index: 2000;
             display: flex;
             align-items: center;
@@ -500,27 +538,28 @@
 
         .retro-window {
             width: 90%;
-            max-width: 600px;
+            max-width: 550px;
             background: var(--bg-card);
-            border: 2px solid var(--neon-pink);
-            box-shadow: 10px 10px 0 rgba(0,0,0,0.5), 0 0 20px rgba(255, 45, 149, 0.3);
-            transform: scale(0.9) translateY(20px);
-            transition: transform 0.4s var(--ease-out-back);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.5), 0 0 15px rgba(0, 245, 255, 0.15);
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.3s var(--ease-out-back);
         }
 
         .modal-overlay.active .retro-window { transform: scale(1) translateY(0); }
 
         .window-bar {
-            background: linear-gradient(90deg, var(--neon-pink), #b00b5e);
-            padding: 0.5rem 1rem;
+            background: linear-gradient(90deg, #008fa8, #005f73);
+            padding: 6px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 2px solid var(--neon-cyan);
         }
 
         .window-title {
             font-family: var(--font-pixel);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
             color: white;
             letter-spacing: 1px;
@@ -530,35 +569,38 @@
             background: var(--bg-deep);
             border: 1px solid white;
             color: white;
-            width: 24px; height: 24px;
+            width: 20px; height: 20px;
             cursor: pointer;
             font-family: monospace;
             display: flex; align-items: center; justify-content: center;
+            font-size: 12px;
         }
 
         .window-content {
-            padding: 2rem;
-            color: #ddd;
+            padding: var(--space-sm);
         }
 
-        .window-grid {
-            display: grid;
-            gap: 1rem;
+        .window-list {
+            list-style: none;
         }
-        
+
         .window-item {
-            background: rgba(255,255,255,0.05);
-            padding: 1rem;
-            border-left: 3px solid #555;
-            transition: 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             cursor: pointer;
+            transition: 0.2s;
         }
         
         .window-item:hover {
-            background: rgba(255,255,255,0.1);
-            border-left-color: var(--neon-cyan);
-            padding-left: 1.5rem;
+            padding-left: 10px;
+            background: rgba(255,255,255,0.02);
+            color: var(--neon-cyan);
         }
+
+        .window-item:last-child { border-bottom: none; }
 
         /* 
          * ══════════════════════════════════════════════════════════════
@@ -566,105 +608,136 @@
          * ══════════════════════════════════════════════════════════════
          */
         section {
-            padding: 8rem 0;
+            padding: var(--space-lg) 0;
             position: relative;
         }
 
         .section-header {
-            margin-bottom: 4rem;
+            margin-bottom: var(--space-md);
         }
 
         .section-label {
             font-family: var(--font-mono);
             color: var(--neon-pink);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
             display: block;
+            opacity: 0.8;
         }
 
         .section-title {
             font-family: var(--font-display);
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: 2.5rem;
+            color: white;
             line-height: 1;
         }
+
+        /* About Text */
+        .about-text {
+            max-width: 750px;
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+        }
+        .about-text p { margin-bottom: 1.5rem; }
+        .highlight { color: white; border-bottom: 1px solid rgba(255,255,255,0.2); }
 
         /* Skills Grid */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--space-sm);
         }
 
         .skill-card {
             background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: var(--space-sm);
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            height: 100%;
         }
 
         .skill-card:hover {
-            transform: translateY(-10px);
             border-color: var(--neon-cyan);
-            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
         .skill-num {
-            font-family: var(--font-display);
-            font-size: 4rem;
-            color: rgba(255,255,255,0.05);
-            position: absolute;
-            top: 0; right: 1rem;
-            font-weight: 800;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.2);
+            margin-bottom: 1rem;
+            display: block;
         }
 
         .skill-card h3 {
             font-family: var(--font-display);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            position: relative;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: white;
+        }
+
+        .skill-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
         /* Projects List */
         .projects-list {
             display: flex;
             flex-direction: column;
-            gap: 4rem;
+            gap: var(--space-md);
         }
 
         .project-item {
             display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 3rem;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 4rem;
+            grid-template-columns: 200px 1fr;
+            gap: var(--space-sm);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: var(--space-md);
+            align-items: start;
         }
 
         .project-meta {
             font-family: var(--font-mono);
+            font-size: 0.8rem;
             color: var(--neon-cyan);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            margin-top: 6px;
         }
 
-        .project-title {
+        .project-content h3 {
             font-family: var(--font-display);
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
-            transition: color 0.3s;
+            transition: color 0.2s;
         }
 
-        .project-item:hover .project-title {
-            color: var(--neon-pink);
+        .project-item:hover h3 { color: var(--neon-pink); }
+
+        .project-tags {
+            margin-top: 1rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .p-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.05);
+            padding: 4px 8px;
+            border-radius: 2px;
         }
 
         /* Contact Grid */
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .contact-card {
@@ -673,21 +746,24 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.08);
             text-decoration: none;
-            color: white;
+            color: var(--text-secondary);
             transition: 0.3s;
+            aspect-ratio: 1/1;
         }
 
         .contact-card:hover {
-            background: var(--neon-pink);
-            color: black;
-            transform: scale(1.05);
+            border-color: var(--neon-pink);
+            color: white;
+            background: rgba(255, 45, 149, 0.05);
+            transform: scale(1.03);
         }
         
         .contact-icon {
-            width: 40px; height: 40px;
+            width: 32px; height: 32px;
             margin-bottom: 1rem;
             fill: currentColor;
         }
@@ -696,10 +772,10 @@
         footer {
             padding: 4rem 0;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.08);
             font-family: var(--font-mono);
-            font-size: 0.9rem;
-            color: #888;
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
 
         /* 
@@ -723,20 +799,20 @@
             }
             
             nav.active { transform: translateX(0); }
-            nav ul { flex-direction: column; text-align: center; }
-            nav a { font-size: 1.5rem; }
+            nav ul { flex-direction: column; text-align: center; gap: 2rem; }
+            nav a { font-size: 1.2rem; }
 
-            .project-item { grid-template-columns: 1fr; gap: 1rem; }
+            .project-item { grid-template-columns: 1fr; gap: 0.5rem; }
+            .project-meta { margin-bottom: 0.5rem; }
             
-            /* Name Wrapping Logic for Mobile */
-            .name-wrapper { flex-direction: column; align-items: flex-start; }
-            .hero-tags { justify-content: flex-start; }
+            .hero-content { padding-right: 0; }
+            .headline { font-size: 2.5rem; }
         }
 
         /* Animation Classes */
         .fade-up {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
             transition: opacity 0.8s, transform 0.8s var(--ease-smooth);
         }
         .fade-up.visible {
@@ -744,9 +820,10 @@
             transform: translateY(0);
         }
         
-        .delay-100 { transition-delay: 0.1s; }
-        .delay-200 { transition-delay: 0.2s; }
-        .delay-300 { transition-delay: 0.3s; }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
 
     </style>
 </head>
@@ -754,7 +831,7 @@
 
     <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
-    <div class="cursor-circle"></div>
+    <div class="cursor-ring"></div>
 
     <!-- Noise Texture -->
     <div class="noise"></div>
@@ -768,7 +845,7 @@
             <div class="runner dog">🐶</div>
         </div>
         <div class="loader-text" id="loaderText">BOOTING SYSTEM...</div>
-        <div class="loader-bar"><div class="loader-progress"></div></div>
+        <div class="loader-bar-bg"><div class="loader-progress"></div></div>
     </div>
 
     <!-- Modal Overlay -->
@@ -779,7 +856,7 @@
                 <button class="close-btn" id="closeModal">X</button>
             </div>
             <div class="window-content" id="modalContent">
-                <!-- Content injected via JS -->
+                <!-- Injected via JS -->
             </div>
         </div>
     </div>
@@ -793,10 +870,10 @@
             </button>
             <nav>
                 <ul>
-                    <li><a href="#about" class="nav-link">About</a></li>
-                    <li><a href="#skills" class="nav-link">Skills</a></li>
-                    <li><a href="#projects" class="nav-link">Projects</a></li>
-                    <li><a href="#contact" class="nav-link">Connect</a></li>
+                    <li><a href="#about" class="nav-link">Identity</a></li>
+                    <li><a href="#skills" class="nav-link">Capabilities</a></li>
+                    <li><a href="#projects" class="nav-link">Work</a></li>
+                    <li><a href="#contact" class="nav-link">Uplink</a></li>
                 </ul>
             </nav>
         </div>
@@ -805,28 +882,32 @@
     <main>
         <!-- Hero Section -->
         <section class="hero">
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
+            <div class="glow-orb glow-1"></div>
+            <div class="glow-orb glow-2"></div>
             
             <div class="container hero-content">
-                <span class="pre-title fade-up">Welcome to the Grid</span>
-                <h1>
-                    <div class="name-wrapper">
-                        <span class="name-part fade-up delay-100">AVINAB</span>
-                        <span class="name-part fade-up delay-200">MAHARJAN</span>
-                    </div>
+                <span class="greeting fade-up">Hey there 👋</span>
+                
+                <h1 class="headline fade-up delay-1">
+                    Portfolio I guess?
                 </h1>
                 
-                <div class="hero-tags fade-up delay-300">
-                    <button class="tag-btn" data-role="builder">BUILDER</button>
-                    <button class="tag-btn" data-role="student">STUDENT</button>
-                    <button class="tag-btn" data-role="explorer">EXPLORER</button>
+                <p class="byline fade-up delay-2">
+                    I'm <span class="name-accent">Avinab Maharjan</span> — 
+                    a curious student exploring networking, security, and automation.
+                    Vigilante hacker by night, aviation enthusiast always.
+                </p>
+                
+                <div class="hero-tags fade-up delay-3">
+                    <button class="tag-btn" data-role="builder">Builder</button>
+                    <button class="tag-btn" data-role="student">Student</button>
+                    <button class="tag-btn" data-role="explorer">Explorer</button>
                 </div>
 
-                <p class="hero-desc fade-up delay-300">
-                    Portfolio I guess? Exploring the intersection of networking, cybersecurity, and automation.
-                    Vigilante hacker by night, aviation enthusiast by day.
-                </p>
+                <div class="hero-cta fade-up delay-4">
+                    <a href="#projects" class="btn btn-primary">See My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
             </div>
         </section>
 
@@ -838,12 +919,12 @@
                     <h2 class="section-title">Who Am I?</h2>
                 </div>
                 
-                <div class="fade-up" style="max-width: 800px; font-size: 1.2rem; color: #ccc;">
-                    <p style="margin-bottom: 2rem;">
+                <div class="about-text fade-up delay-1">
+                    <p>
                         I'm a student focused on the fundamentals. I don't just want to use the tools; I want to understand how they work. 
-                        Currently deep-diving into <span class="text-neon-pink">Networking protocols</span>, 
-                        <span class="text-neon-cyan">Cybersecurity</span>, and writing <span class="text-neon-yellow">Python scripts</span> 
-                        to automate the boring stuff.
+                        Currently deep-diving into <span class="highlight text-neon-pink">Networking protocols</span>, 
+                        <span class="highlight text-neon-cyan">Cybersecurity</span>, and writing 
+                        <span class="highlight text-neon-yellow">Python scripts</span> to automate the boring stuff.
                     </p>
                     <p>
                         When I'm not staring at a terminal, I'm probably thinking about aviation physics, petting a cat, 
@@ -862,25 +943,30 @@
                 </div>
 
                 <div class="skills-grid">
-                    <div class="skill-card fade-up delay-100">
+                    <div class="skill-card fade-up delay-1">
                         <span class="skill-num">01</span>
                         <h3 class="text-neon-pink">Networking</h3>
                         <p>Trying to love it but it feels one-sided. Packet analysis, virtual labs, and understanding the pipes of the internet.</p>
                     </div>
-                    <div class="skill-card fade-up delay-200">
+                    <div class="skill-card fade-up delay-2">
                         <span class="skill-num">02</span>
                         <h3 class="text-neon-cyan">Cybersecurity</h3>
                         <p>Vigilante hacker by night (legally). Vulnerability assessment and learning how to break things to fix them.</p>
                     </div>
-                    <div class="skill-card fade-up delay-300">
+                    <div class="skill-card fade-up delay-3">
                         <span class="skill-num">03</span>
                         <h3 class="text-neon-yellow">Automation</h3>
-                        <p>Python & Bash. If I have to do it twice, I write a script. Making machines do the heavy lifting.</p>
+                        <p>Making machines do the heavy lifting. If I have to do it twice, I write a script.</p>
                     </div>
-                    <div class="skill-card fade-up delay-100">
+                    <div class="skill-card fade-up delay-1">
                         <span class="skill-num">04</span>
                         <h3 class="text-neon-purple">Experiments</h3>
-                        <p>Random code projects, 2AM thoughts, and things I build just to see "what if".</p>
+                        <p>Things I build just to see "what if". Random code projects that sometimes actually work.</p>
+                    </div>
+                    <div class="skill-card fade-up delay-2">
+                        <span class="skill-num">05</span>
+                        <h3 class="text-neon-orange">Philosophy</h3>
+                        <p>2AM activities instead of sleeping. Thinking about the future of tech and why my code won't compile.</p>
                     </div>
                 </div>
             </div>
@@ -896,35 +982,41 @@
 
                 <div class="projects-list">
                     <article class="project-item fade-up">
-                        <div>
-                            <span class="project-meta">PERSONAL TOOL</span>
-                            <h3 class="project-title">To-Do App</h3>
-                        </div>
-                        <div>
-                            <p style="margin-bottom: 1rem; color: #aaa;">A minimalist task manager focused on clean UX. Built to master DOM manipulation and local storage without bloated frameworks.</p>
-                            <span class="font-mono text-neon-cyan">#JavaScript #CSS #LocalStorage</span>
-                        </div>
-                    </article>
-
-                    <article class="project-item fade-up">
-                        <div>
-                            <span class="project-meta">SECURITY</span>
-                            <h3 class="project-title">Security Checker CLI</h3>
-                        </div>
-                        <div>
-                            <p style="margin-bottom: 1rem; color: #aaa;">Command-line tool for running basic security audits on local systems. Identifies common vulnerabilities and configuration issues.</p>
-                            <span class="font-mono text-neon-pink">#Python #Automation #SecOps</span>
+                        <div class="project-meta">PERSONAL TOOL</div>
+                        <div class="project-content">
+                            <h3>To-Do App</h3>
+                            <p style="color: #aaa;">A minimalist task manager focused on clean UX. Built to master DOM manipulation and local storage without bloated frameworks.</p>
+                            <div class="project-tags">
+                                <span class="p-tag">JavaScript</span>
+                                <span class="p-tag">CSS</span>
+                                <span class="p-tag">LocalStorage</span>
+                            </div>
                         </div>
                     </article>
 
                     <article class="project-item fade-up">
-                        <div>
-                            <span class="project-meta">DATA VIZ</span>
-                            <h3 class="project-title">Social Media Map</h3>
+                        <div class="project-meta">SECURITY</div>
+                        <div class="project-content">
+                            <h3>Security Checker CLI</h3>
+                            <p style="color: #aaa;">Command-line tool for running basic security audits on local systems. Identifies common vulnerabilities and configuration issues.</p>
+                            <div class="project-tags">
+                                <span class="p-tag">Python</span>
+                                <span class="p-tag">Automation</span>
+                                <span class="p-tag">SecOps</span>
+                            </div>
                         </div>
-                        <div>
-                            <p style="margin-bottom: 1rem; color: #aaa;">Visualizing usage patterns across platforms. Transforms raw API data into meaningful graphic representations.</p>
-                            <span class="font-mono text-neon-yellow">#API #DataViz #Frontend</span>
+                    </article>
+
+                    <article class="project-item fade-up">
+                        <div class="project-meta">DATA VIZ</div>
+                        <div class="project-content">
+                            <h3>Social Media Map</h3>
+                            <p style="color: #aaa;">Visualizing usage patterns across platforms. Transforms raw API data into meaningful graphic representations.</p>
+                            <div class="project-tags">
+                                <span class="p-tag">API Integration</span>
+                                <span class="p-tag">DataViz</span>
+                                <span class="p-tag">Frontend</span>
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -979,13 +1071,12 @@
          */
 
         // 1. LOADING SCREEN LOGIC
-        // Cycles through retro loading messages
         const messages = [
             "BOOTING SYSTEM...",
             "TUNING FREQUENCIES...",
-            "REWINDING TAPE...",
             "FEEDING THE CAT...",
-            "LOADING MEMORIES..."
+            "LOADING MEMORIES...",
+            "ALMOST THERE..."
         ];
         
         let msgIndex = 0;
@@ -994,7 +1085,7 @@
         const msgInterval = setInterval(() => {
             msgIndex = (msgIndex + 1) % messages.length;
             msgElement.innerText = messages[msgIndex];
-        }, 600);
+        }, 500);
 
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -1002,16 +1093,15 @@
                 document.getElementById('loader').classList.add('hidden');
                 // Trigger intro animations
                 document.querySelectorAll('.hero .fade-up').forEach(el => el.classList.add('visible'));
-            }, 2500); // Artificial delay to show off the cool cat animation
+            }, 2200); 
         });
 
 
         // 2. CUSTOM CURSOR
-        // Uses requestAnimationFrame for smooth following without lag
         const cursorDot = document.querySelector('.cursor-dot');
-        const cursorCircle = document.querySelector('.cursor-circle');
+        const cursorRing = document.querySelector('.cursor-ring');
         let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
+        let ringX = 0, ringY = 0;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
@@ -1020,26 +1110,39 @@
             // Immediate movement for dot
             cursorDot.style.left = mouseX + 'px';
             cursorDot.style.top = mouseY + 'px';
+            
+            // Hide cursor when reading text (p, span, headings)
+            const target = e.target;
+            const computedStyle = window.getComputedStyle(target);
+            
+            if (['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'LI'].includes(target.tagName) && 
+                target.closest('a, button, .tag-btn, .contact-card') === null) {
+                cursorDot.classList.add('hidden');
+                cursorRing.classList.add('hidden');
+            } else {
+                cursorDot.classList.remove('hidden');
+                cursorRing.classList.remove('hidden');
+            }
         });
 
         function animateCursor() {
-            // Lerp (Linear Interpolation) for smooth trailing effect
-            const speed = 0.15;
-            cursorX += (mouseX - cursorX) * speed;
-            cursorY += (mouseY - cursorY) * speed;
+            // Lerp (Linear Interpolation) for smooth trailing
+            const speed = 0.25;
+            ringX += (mouseX - ringX) * speed;
+            ringY += (mouseY - ringY) * speed;
             
-            cursorCircle.style.left = cursorX + 'px';
-            cursorCircle.style.top = cursorY + 'px';
+            cursorRing.style.left = ringX + 'px';
+            cursorRing.style.top = ringY + 'px';
             
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
 
         // Hover Effects for Cursor
-        const interactiveElements = document.querySelectorAll('a, button, .project-item, .skill-card');
+        const interactiveElements = document.querySelectorAll('a, button, .project-item, .skill-card, .contact-card, .tag-btn');
         interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursorCircle.classList.add('hovered'));
-            el.addEventListener('mouseleave', () => cursorCircle.classList.remove('hovered'));
+            el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
         });
 
 
@@ -1048,44 +1151,48 @@
             builder: {
                 title: 'BUILDER.EXE',
                 content: `
-                    <div class="window-grid">
-                        <div class="window-item" onclick="window.location.href='#projects'">
-                            <h4 class="font-display">To-Do App</h4>
-                            <p class="font-mono" style="font-size:0.8rem; color:#aaa;">Minimalist Task Manager</p>
-                        </div>
-                        <div class="window-item" onclick="window.location.href='#projects'">
-                            <h4 class="font-display">Security CLI</h4>
-                            <p class="font-mono" style="font-size:0.8rem; color:#aaa;">Python Automation Tool</p>
-                        </div>
-                    </div>`
+                    <ul class="window-list">
+                        <li class="window-item" onclick="window.location.href='#projects'; closeModal()">
+                            <span class="font-display">To-Do App</span>
+                            <span class="font-mono" style="font-size:0.7rem; color:var(--text-muted)">JS/DOM</span>
+                        </li>
+                        <li class="window-item" onclick="window.location.href='#projects'; closeModal()">
+                            <span class="font-display">Security CLI</span>
+                            <span class="font-mono" style="font-size:0.7rem; color:var(--text-muted)">PYTHON</span>
+                        </li>
+                        <li class="window-item" onclick="window.location.href='#projects'; closeModal()">
+                            <span class="font-display">Data Viz</span>
+                            <span class="font-mono" style="font-size:0.7rem; color:var(--text-muted)">API</span>
+                        </li>
+                    </ul>`
             },
             student: {
                 title: 'STUDENT.SYS',
                 content: `
-                    <div class="window-grid">
-                        <div class="window-item" onclick="window.location.href='#skills'">
-                            <h4 class="font-display">Networking</h4>
-                            <p class="font-mono" style="font-size:0.8rem; color:#aaa;">Protocols & Architecture</p>
-                        </div>
-                        <div class="window-item" onclick="window.location.href='#skills'">
-                            <h4 class="font-display">Cybersecurity</h4>
-                            <p class="font-mono" style="font-size:0.8rem; color:#aaa;">Ethical Hacking</p>
-                        </div>
-                    </div>`
+                    <ul class="window-list">
+                        <li class="window-item" onclick="window.location.href='#skills'; closeModal()">
+                            <span class="font-display">Networking</span>
+                            <span class="font-mono" style="font-size:0.7rem; color:var(--text-muted)">LABS</span>
+                        </li>
+                        <li class="window-item" onclick="window.location.href='#skills'; closeModal()">
+                            <span class="font-display">Cybersecurity</span>
+                            <span class="font-mono" style="font-size:0.7rem; color:var(--text-muted)">ETHICAL</span>
+                        </li>
+                    </ul>`
             },
             explorer: {
                 title: 'EXPLORER.DAT',
                 content: `
-                    <div class="window-grid">
-                        <div class="window-item">
-                            <h4 class="font-display">Aviation</h4>
-                            <p class="font-mono" style="font-size:0.8rem; color:#aaa;">Physics of flight enthusiast</p>
-                        </div>
-                        <div class="window-item">
-                            <h4 class="font-display">Philosophy</h4>
-                            <p class="font-mono" style="font-size:0.8rem; color:#aaa;">2AM Existential Thoughts</p>
-                        </div>
-                    </div>`
+                    <ul class="window-list">
+                        <li class="window-item">
+                            <span class="font-display">Aviation</span>
+                            <span class="font-mono" style="font-size:0.7rem; color:var(--text-muted)">PHYSICS</span>
+                        </li>
+                        <li class="window-item">
+                            <span class="font-display">Philosophy</span>
+                            <span class="font-mono" style="font-size:0.7rem; color:var(--text-muted)">2AM</span>
+                        </li>
+                    </ul>`
             }
         };
 
@@ -1114,18 +1221,23 @@
             if(e.target === modalOverlay) closeModal();
         });
 
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
 
         // 4. SCROLL ANIMATIONS (IntersectionObserver)
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
+            rootMargin: "0px 0px -40px 0px"
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Only animate once
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
@@ -1158,8 +1270,8 @@
             
             if (currentScroll <= 0) {
                 header.classList.remove('hidden');
-                header.style.background = "rgba(10, 10, 18, 0.7)";
-            } else if (currentScroll > lastScroll) {
+                header.style.background = "rgba(10, 10, 18, 0.8)";
+            } else if (currentScroll > lastScroll && currentScroll > 100) {
                 // Scrolling down
                 header.classList.add('hidden');
             } else {
